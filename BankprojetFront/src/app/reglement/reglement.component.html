@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Règlements - PayReconcile Pro</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .amount-positive { color: green; }
+        .amount-negative { color: red; }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .status-rapproche { background-color: #d4edda; color: #155724; }
+        .status-en-attente { background-color: #fff3cd; color: #856404; }
+        .status-valide { background-color: #cce5ff; color: #004085; }
+        .status-rejete { background-color: #f8d7da; color: #721c24; }
+        .btn-primary-custom {
+            background-color: rgba(15, 47, 90, 0.776);
+            border-color: rgba(15, 47, 90, 0.776);
+            color: white;
+        }
+        .search-filter-bar {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+
+    <!-- Navigation Bar -->
+    <app-sidebar></app-sidebar>
+    
+    <div class="container-fluid" style="margin-top:-150px;">
+        <!-- Page Header -->
+        <div class="page-header" style="background-color:#2976b0; padding: 20px; margin-bottom: 20px; border-radius: 5px;margin-top:-585px;width:1225px;margin-left: 250px;">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="mb-3 mb-md-0">
+                    <h2 class="fw-bold custom mb-1" style="color: rgb(255, 255, 255);">
+                         <i class="fas fa-money-bill-wave me-2"></i>
+                     Gestion des paiements
+                    </h2>
+                    <p class="text mb-0" style="color:  rgb(255, 255, 255);">Gérez tous vos paiements entrants et sortants</p>
+                </div>
+                <button (click)="open()" class="add-account-btn">
+                    <i class="fas fa-plus me-2"></i>
+                    Nouveau paiement
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+       
+
+        <!-- Search and Filter Bar -->
+        <div class="search-filter-bar" style="width:1225px;margin-left: 250px;background-color:  #d6e3e8a1;">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="searchInput" class="form-label" style="color:#09337be9;font-weight: 600;">Rechercher</label>
+                    <div class="input-group">
+    <span class="input-group-text"><i class="fas fa-search"></i></span>
+    <input type="text" class="form-control" id="searchInput" 
+           [(ngModel)]="searchQuery" (input)="filterReglements()"
+           placeholder="Référence, entreprise...">
+  </div>
+                </div>
+            <div class="col-md-2">
+  <label for="typeFilter" class="form-label" style="color:#09337be9;font-weight: 600;">Type</label>
+  <select class="form-select" id="typeFilter" [(ngModel)]="selectedType" (change)="onTypeChange()" >
+    <option value="">Tous les types</option>
+    <option *ngFor="let type of types.slice(1)" [value]="type">{{type}}</option>
+  </select>
+</div>
+                <div class="col-md-2">
+  <label for="modePaiementFilter" class="form-label" style="color:#09337be9;font-weight: 600;">Mode paiement</label>
+  <select class="form-select" id="modePaiementFilter" 
+         [(ngModel)]="selectedModePaiement" (change)="onModePaiementChange()">
+    <option value="">Tous les modes</option>
+    <option *ngFor="let mode of modesPaiement.slice(1)" [value]="mode">
+      {{ mode }}
+    </option>
+  </select>
+</div>
+               <div class="col-md-2">
+  <label for="dateFrom" class="form-label" style="color:#09337be9;font-weight: 600;">Date paiement</label>
+  <input type="date" class="form-control" id="dateFrom" 
+       [(ngModel)]="searchQuery"  [(ngModel)]="selectedDate" (change)="onDateChange()">
+</div>
+                
+              <div class="col-md-1 d-flex align-items-end">
+  <button (click)="clearFilters()" 
+          [disabled]="!searchQuery && !selectedType && !selectedModePaiement && !selectedDate" 
+          class="btn btn-outline-secondary w-100">
+    <i class="fas fa-times-circle"></i>
+  </button>
+</div>
+            </div>
+        </div>
+
+        <!-- Liste des Règlements -->
+        <div class="card fade-in" style="width:1225px;margin-left: 250px;">
+            
+            <div class="table-responsive">
+                        <table class="table table-hover table-custom">
+                        <thead style="background-color:#d6e3e8a1;">
+                            <tr >
+                                <th>Référence</th>
+                                <th>Date paiement</th>
+                                <th>Company</th>
+                                <th>Type</th>
+                          
+                                <th>Montant</th>
+                                <th>Mode paiement</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reglementsTable">
+                            <tr *ngFor="let reglement of displayedReglements">
+                                <td><strong>REG-0 {{reglement.id}}</strong></td>
+                             <td>{{reglement.dateReglement | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <div class="company-info">
+                                        <strong>{{reglement.nom}}</strong><br>
+                                        <small class="text-muted">{{reglement.type}}</small>
+                                    </div>
+                                </td>
+                                <td><span class="badge" [ngClass]="{
+        'bg-success': reglement.type === 'CLIENT',
+        'bg-info': reglement.type === 'FOURNISSEUR'
+      }">
+        {{reglement.type}}
+      </span></td>
+                               
+                                <td><span class="amount-display amount-negative">{{reglement.montantReglemnt}} TND</span></td>
+                                <td><span class="status-badge status-rapproche">{{reglement.modePaiement}}</span></td>
+                           <td>
+  <div *ngIf="reglement.description; else noDescription" class="description-text">
+    {{ reglement.description }}
+  </div>
+  <ng-template #noDescription>
+    <span class="text-muted">-</span>
+  </ng-template>
+</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm " style="background-color: rgb(202, 35, 35);" onclick="viewDetails('REG-2024-001')">
+                                            <i class="fas fa-trash" style="color:white"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-success" (click)="openRapprochement(reglement.id)">
+                                            <i class="fas fa-link"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- New Payment Modal -->
+    <div class="modal fade" id="newPaymentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle me-2"></i>Nouveau Règlement
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="paymentRef" class="form-label">Référence</label>
+                                <input type="text" class="form-control" id="paymentRef" value="PAY-2024-006" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paymentDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="paymentDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="companyType" class="form-label">Type d'entreprise</label>
+                                <select class="form-select" id="companyType" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="client">Client</option>
+                                    <option value="supplier">Fournisseur</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="companyName" class="form-label">Entreprise</label>
+                                <select class="form-select" id="companyName" required>
+                                    <option value="">Sélectionner une entreprise...</option>
+                                    <option value="sarl-dupont">SARL Dupont</option>
+                                    <option value="fournisseur-abc">Fournisseur ABC</option>
+                                    <option value="client-xyz">Client XYZ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paymentType" class="form-label">Type de règlement</label>
+                                <select class="form-select" id="paymentType" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="incoming">Entrant</option>
+                                    <option value="outgoing">Sortant</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paymentAmount" class="form-label">Montant (TND)</label>
+                                <input type="number" class="form-control" id="paymentAmount" step="0.01" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="paymentDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="paymentDescription" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paymentMethod" class="form-label">Mode de paiement</label>
+                                <select class="form-select" id="paymentMethod">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="transfer">Virement</option>
+                                    <option value="check">Chèque</option>
+                                    <option value="cash">Espèces</option>
+                                    <option value="card">Carte bancaire</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bankAccount" class="form-label">Compte bancaire</label>
+                                <select class="form-select" id="bankAccount">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="main">Compte principal</option>
+                                    <option value="secondary">Compte secondaire</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-check-circle me-2"></i>Créer le règlement
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+</html>

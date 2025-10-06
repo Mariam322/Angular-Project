@@ -1,0 +1,648 @@
+<app-sidebar></app-sidebar>
+<div class="main-container">
+  
+  
+  <div class="main-content">
+    <div class="page-header" style="background-color:#2976b0;  padding: 20px; margin-bottom: 20px; border-radius: 10px;margin-top:-585px;width:1197px; margin-left: 5px;">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="mb-3 mb-md-0">
+                            <h2 class="fw-bold custom mb-1" style="color: white;">
+                             <i class="fas fa-file-invoice me-2"></i>
+            Gestion des Affectations Financières
+                            </h2>
+                            <p class="mb-0">
+            <i class="fas fa-info-circle me-1"></i> Affectation précise des règlements aux opérations, factures et dépenses
+          </p>
+                           
+                        </div>
+                       
+                    </div>
+                </div>
+    <!-- En-tête amélioré -->
+    
+
+    <!-- Alertes améliorées -->
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="errorMessage" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-exclamation-triangle me-3"></i>
+        <div>
+          <h5 class="alert-heading mb-1">Erreur d'affectation</h5>
+          <p class="mb-0">{{errorMessage}}</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show" *ngIf="successMessage" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-check-circle me-3"></i>
+        <div>
+          <h5 class="alert-heading mb-1">Succès</h5>
+          <p class="mb-0">{{successMessage}}</p>
+        </div>
+      </div>
+      <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div class="content-grid">
+      <!-- Colonne Règlements -->
+      <div class="column">
+        <div class="card">
+          <div class="card-header "  style="background-color:#8dadc6 ;height: 80px;">
+            <h6>
+              <i class="fas fa-money-bill-wave me-2"></i> Règlements
+              <span class="badge bg-white text-primary ms-2">{{filteredReglements.length}}</span>
+            </h6>
+            <div class="d-flex">
+              <button class="btn btn-sm btn-light me-2" (click)="loadInitialData()" [disabled]="isLoading" placement="top" ngbTooltip="Actualiser les données">
+                <i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i>
+              </button>
+              <div class="input-group input-group-sm">
+                
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="search-container">
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher..." 
+                       [ngModel]="getSearchValue()" 
+                       (ngModelChange)="onSearchChange($event)">
+                <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="isLoading" class="loading-container">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+              </div>
+            </div>
+            
+            <div *ngIf="!isLoading && filteredReglements.length === 0" class="empty-state">
+              <i class="fas fa-info-circle text-muted mb-2"></i>
+              <p class="mb-0">Aucun règlement disponible</p>
+            </div>
+            
+            <div class="list-group">
+              <div *ngFor="let reglement of filteredReglements" 
+                   class="list-group-item"
+                   [class.active]="selectedReglement?.id === reglement.id"
+                   [class.disabled]="isReglementAffected(reglement)"
+                   (click)="selectReglement(reglement)"
+                   [ngClass]="{
+                     'border-start-success': reglement.type === 'CLIENT',
+                     'border-start-info': reglement.type === 'FOURNISSEUR'
+                   }">
+                <div class="card-item">
+                  <div>
+                    <div class="fw-bold d-flex align-items-center">
+                      <span>REG-{{reglement.id}}</span>
+                      <span *ngIf="isReglementAffected(reglement)" class="badge bg-warning ms-2">Affecté</span>
+                    </div>
+                    <div class="text-muted small">{{reglement.nom}}</div>
+                  </div>
+                  <div class="text-end">
+                    <span class="badge mb-1" 
+                          [ngClass]="{
+                            'bg-success': reglement.type === 'CLIENT', 
+                            'bg-info': reglement.type === 'FOURNISSEUR'
+                          }">
+                      {{reglement.type}}
+                    </span>
+                    <div class="fw-bold" [ngClass]="{
+                      'text-success': reglement.type === 'CLIENT',
+                      'text-info': reglement.type === 'FOURNISSEUR'
+                    }">
+                      {{reglement.montantReglemnt }} TND
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer" *ngIf="totalReglementPages > 1">
+            <nav aria-label="Pagination">
+              <ul class="pagination pagination-sm justify-content-center mb-0">
+                <li class="page-item" [class.disabled]="currentReglementPage === 1">
+                  <a class="page-link" (click)="changeReglementPage(currentReglementPage - 1)">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li *ngFor="let page of getPages(totalReglementPages)" 
+                    class="page-item" 
+                    [class.active]="currentReglementPage === page">
+                  <a class="page-link" (click)="changeReglementPage(page)">{{page}}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentReglementPage === totalReglementPages">
+                  <a class="page-link" (click)="changeReglementPage(currentReglementPage + 1)">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne Affectation -->
+      <div class="column">
+        <div class="card">
+          <div class="card-header" style="background-color:#8dadc6 ;height: 80px;">
+            <h6>
+              <i class="fas fa-exchange-alt me-2"></i> Processus d'Affectation
+            </h6>
+            <div>
+              <span class="badge bg-white text-success">Nouvelle affectation</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div *ngIf="selectedReglement && selectedItem" class="affectation-process">
+              <!-- Carte Règlement -->
+              <div class="card mb-3 border-success">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-success">
+                      <i class="fas fa-money-bill-wave me-2"></i> Règlement sélectionné
+                    </h6>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': selectedReglement.type === 'CLIENT',
+                      'bg-info': selectedReglement.type === 'FOURNISSEUR'
+                    }">
+                      {{selectedReglement.type}}
+                    </span>
+                  </div>
+                  <hr>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="fw-bold">REG-{{selectedReglement.id}}</div>
+                      <div class="text-muted small">{{selectedReglement.nom}}</div>
+                    </div>
+                    <div class="text-end">
+                      <div class="fw-bold">{{selectedReglement.montantReglemnt }} TND</div>
+                      <div class="text-muted small">
+                        Reste: {{selectedReglement.montantReglemnt - getTotalAffecte() }} TND
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Carte Élément -->
+              <div class="card mb-3 border-primary" >
+                <div class="card-body" >
+                  <h6 class="text-primary mb-2">
+                    <i class="fas fa-link me-2"></i> 
+                    <span *ngIf="activeTab === 'operations'">Opération bancaire</span>
+                    <span *ngIf="activeTab === 'factures'">Facture</span>
+                    <span *ngIf="activeTab === 'depenses'">Dépense</span>
+                  </h6>
+                  <hr>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="fw-bold">
+                        <span *ngIf="activeTab === 'operations'">{{selectedItem.numCheque || 'OP-'+selectedItem.idOperation}}</span>
+                        <span *ngIf="activeTab === 'factures'">{{selectedItem.numeroFacture}}</span>
+                        <span *ngIf="activeTab === 'depenses'">{{selectedItem.numDepense}}</span>
+                      </div>
+                      <div class="text-muted small" *ngIf="selectedItem.nom || selectedItem.reference">
+                        {{selectedItem.nom || selectedItem.reference}}
+                      </div>
+                    </div>
+                    <div class="text-end">
+                      <div class="fw-bold">
+                        <span *ngIf="activeTab === 'operations'">
+                          {{(selectedItem.credit || selectedItem.debit) }}TND
+                        </span>
+                        <span *ngIf="activeTab === 'factures'">
+                          {{selectedItem.montantTtc }}TND
+                        </span>
+                        <span *ngIf="activeTab === 'depenses'">
+                          {{selectedItem.montantTtcDepense }}TND
+                        </span>
+                      </div>
+                      <div class="text-muted small">
+                        <span *ngIf="activeTab === 'operations'">{{selectedItem.dateOperation | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="activeTab === 'factures'">{{selectedItem.dateFacture | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="activeTab === 'depenses'">{{selectedItem.dateDepense | date:'dd/MM/yyyy'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Formulaire d'affectation -->
+              <div class="affectation-form">
+                <label for="montantAffectation" class="form-label">
+                  <i class="fas fa-euro-sign me-1"></i> Montant à affecter
+                </label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fas fa-calculator"></i></span>
+                  <input type="number" class="form-control" id="montantAffectation" 
+                         [(ngModel)]="montantAffectation" step="0.01" min="0.01"
+                         [max]="selectedReglement.montantReglemnt - getTotalAffecte()"
+                         [disabled]="isLoading">
+                  <button class="btn btn-outline-secondary" type="button" (click)="setMaxAmount()">
+                    Max
+                  </button>
+                </div>
+                <div class="progress mb-3">
+                  <div class="progress-bar bg-success" role="progressbar" 
+                       [style.width]="getProgressWidth()" 
+                       [attr.aria-valuenow]="getProgressWidth()" 
+                       aria-valuemin="0" 
+                       aria-valuemax="100">
+                  </div>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-success" 
+                          (click)="confirmAffectation()"
+                          [disabled]="isLoading || !montantAffectation">
+                    <i class="fas fa-check-circle me-1"></i> Confirmer l'affectation
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm ms-2"></span>
+                  </button>
+                  <button class="btn btn-outline-secondary" 
+                          (click)="resetSelection()"
+                          [disabled]="isLoading">
+                    <i class="fas fa-times me-1"></i> Annuler
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="(!selectedReglement || !selectedItem) && affectations.length === 0" class="empty-state">
+              <div class="mb-3">
+                <i class="fas fa-hand-pointer" style="color: #2976b0;"></i>
+              </div>
+              <h5 class="fw-semibold mb-2">Sélectionnez un règlement et un élément</h5>
+              <p class="mb-0">Commencez par sélectionner un règlement à gauche et un élément à droite</p>
+            </div>
+
+            <!-- Affectations existantes -->
+            <div *ngIf="affectations.length > 0" class="existing-affectations">
+              <h6 class="fw-semibold mb-3">
+                <i class="fas fa-list-check me-2"></i> Affectations existantes pour ce règlement
+              </h6>
+              <div class="list-group">
+                <div *ngFor="let affectation of affectations" class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="d-flex align-items-center">
+                        <i class="fas me-2" 
+                           [ngClass]="{
+                             'fa-exchange-alt text-primary': affectation.idOperationBancaire,
+                             'fa-file-invoice text-info': affectation.idPieceCommercial,
+                             'fa-receipt text-warning': affectation.idDepense
+                           }"></i>
+                        <div>
+                          <div class="fw-bold">
+                            <span *ngIf="affectation.idPieceCommercial">FAC-{{affectation.idPieceCommercial}}</span>
+                            <span *ngIf="affectation.idDepense">DEP-{{affectation.idDepense}}</span>
+                            <span *ngIf="affectation.idOperationBancaire">OP-{{affectation.idOperationBancaire}}</span>
+                          </div>
+                          <div class="text-muted small">{{affectation.dateAffectation | date:'dd/MM/yyyy HH:mm'}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="me-3 fw-bold">{{affectation.montantAffectation}}</div>TND
+                      <button class="btn btn-sm btn-outline-danger" 
+                              (click)="deleteAffectation(affectation.id)"
+                              [disabled]="isLoading"
+                              placement="top" ngbTooltip="Supprimer">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colonne Éléments à Affecter -->
+      <div class="column">
+        <div class="card">
+          <div class="card-header " style="background-color:#8dadc6">
+            <div class="d-flex justify-content-between align-items-center">
+              <h6>
+                <i class="fas fa-link me-2"></i> Éléments Disponibles
+              </h6>
+              <div class="btn-group btn-group-sm">
+                <button class="btn" 
+                        [ngClass]="{
+                          'btn-light': activeTab !== 'operations', 
+                          'btn-white': activeTab === 'operations'
+                        }"
+                        (click)="onTabChange('operations')">
+                  <i class="fas fa-exchange-alt me-1"></i> Ops
+                </button>
+                <button class="btn" 
+                        [ngClass]="{
+                          'btn-light': activeTab !== 'factures', 
+                          'btn-white': activeTab === 'factures'
+                        }"
+                        (click)="onTabChange('factures')">
+                  <i class="fas fa-file-invoice me-1"></i> Factures
+                </button>
+                <button class="btn" 
+                        [ngClass]="{
+                          'btn-light': activeTab !== 'depenses', 
+                          'btn-white': activeTab === 'depenses'
+                        }"
+                        (click)="onTabChange('depenses')">
+                  <i class="fas fa-receipt me-1"></i> Dépenses
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Recherche améliorée -->
+            <div class="search-container">
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Rechercher..." 
+                       [ngModel]="getSearchValue()" 
+                       (ngModelChange)="onSearchChange($event)">
+                <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contenu des onglets -->
+            <div *ngIf="activeTab === 'operations'">
+              <div *ngIf="filteredOperations.length === 0" class="empty-state">
+                <i class="fas fa-info-circle text-muted mb-2"></i>
+                <p class="mb-0">Aucune opération disponible</p>
+              </div>
+              <div class="list-group">
+                <div *ngFor="let operation of filteredOperations" 
+                     class="list-group-item"
+                     [class.active]="activeTab === 'operations' && selectedItem?.idOperation === operation.idOperation"
+                     (click)="selectItem(operation)"
+                     [ngClass]="{
+                       'border-start-success': operation.credit > 0,
+                       'border-start-danger': operation.debit > 0
+                     }">
+                  <div class="card-item">
+                    <div>
+                      <div class="fw-bold">{{operation.numCheque || 'OP-'+operation.idOperation}}</div>
+                      <div class="text-muted small">{{operation.dateOperation | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                    <div class="text-end">
+                      <span class="badge mb-1" 
+                            [ngClass]="{
+                              'bg-success': operation.credit > 0, 
+                              'bg-danger': operation.debit > 0
+                            }">
+                        {{operation.credit > 0 ? 'CREDIT' : 'DEBIT'}}
+                      </span>
+                      <div class="fw-bold" [ngClass]="{
+                        'text-success': operation.credit > 0,
+                        'text-danger': operation.debit > 0
+                      }">
+                        {{(operation.credit || operation.debit)  }}TND
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="activeTab === 'factures'">
+              <div *ngIf="filteredFactures.length === 0" class="empty-state">
+                <i class="fas fa-info-circle text-muted mb-2"></i>
+                <p class="mb-0">Aucune facture disponible</p>
+              </div>
+              <div class="list-group">
+                <div *ngFor="let facture of filteredFactures" 
+                     class="list-group-item"
+                     [class.active]="activeTab === 'factures' && selectedItem?.id === facture.id"
+                     (click)="selectItem(facture)"
+                     [ngClass]="{
+                       'border-start-info': true
+                     }">
+                  <div class="card-item">
+                    <div>
+                      <div class="fw-bold">{{facture.numeroFacture}}</div>
+                      <div class="text-muted small">{{facture.nom || facture.reference}}</div>
+                    </div>
+                    <div class="text-end">
+                      <div class="fw-bold text-info">{{facture.montantTtc }}TND</div>
+                      <div class="text-muted small">{{facture.dateFacture | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="activeTab === 'depenses'">
+              <div *ngIf="filteredDepenses.length === 0" class="empty-state">
+                <i class="fas fa-info-circle text-muted mb-2"></i>
+                <p class="mb-0">Aucune dépense disponible</p>
+              </div>
+              <div class="list-group">
+                <div *ngFor="let depense of filteredDepenses" 
+                     class="list-group-item"
+                     [class.active]="activeTab === 'depenses' && selectedItem?.id === depense.id"
+                     (click)="selectItem(depense)"
+                     [ngClass]="{
+                       'border-start-warning': true
+                     }">
+                  <div class="card-item">
+                    <div>
+                      <div class="fw-bold">{{depense.numDepense}}</div>
+                      <div class="text-muted small">{{depense.dateReceptionDepense | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                    <div class="text-end">
+                      <div class="fw-bold text-warning">{{depense.montantTtcDepense }}TND</div>
+                      <div class="text-muted small">{{depense.dateDepense | date:'dd/MM/yyyy'}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer" *ngIf="getTotalPages() > 1">
+            <nav aria-label="Pagination">
+              <ul class="pagination pagination-sm justify-content-center mb-0">
+                <li class="page-item" [class.disabled]="getCurrentPage() === 1">
+                  <a class="page-link" (click)="changePage(getCurrentPage() - 1)">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li *ngFor="let page of getPages(getTotalPages())" 
+                    class="page-item" 
+                    [class.active]="getCurrentPage() === page">
+                  <a class="page-link" (click)="changePage(page)">{{page}}</a>
+                </li>
+                <li class="page-item" [class.disabled]="getCurrentPage() === getTotalPages()">
+                  <a class="page-link" (click)="changePage(getCurrentPage() + 1)">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau des Affectations Récents -->
+   <div class="history-section">
+  <div class="card">
+    <div class="card-header">
+      <h6>
+        <i class="fas fa-history me-2"></i> Historique des Affectations
+      </h6>
+      <div class="d-flex">
+        <!-- Filtre par date -->
+        <div class="input-group input-group-sm me-2">
+          <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+          <input type="date" class="form-control" [(ngModel)]="filterDate" (change)="applyFilters()">
+        </div>
+        
+        <!-- Nouveau filtre par type d'affectation -->
+        <div class="input-group input-group-sm me-2">
+          <span class="input-group-text"><i class="fas fa-filter"></i></span>
+          <select class="form-select" [(ngModel)]="filterType" (change)="applyFilters()">
+            <option value="">Tous les types</option>
+            <option value="OPERATION_BANCAIRE">Opération bancaire</option>
+            <option value="FACTURE">Facture</option>
+            <option value="DEPENSE">Dépense</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-sm btn-outline-secondary" (click)="refreshHistory()">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover table-custom">
+              <thead style="background-color: #d6e3e8a1;">
+                <tr>
+                  <th>Date Affectation</th>
+                  <th>Règlement</th>
+                  <th>Type</th>
+                  <th>Élément Affecté</th>
+                 
+                  <th>Statut</th>
+                  
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let affectation of filteredRecentAffectations">
+                  <td>
+                    <div class="fw-semibold">{{affectation.dateAffectation | date:'dd/MM/yyyy'}}</div>
+                    <div class="text-muted small">{{affectation.dateAffectation | date:'HH:mm'}}</div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="me-2" [ngClass]="{
+                        'text-success': affectation.reglementType === 'CLIENT',
+                        'text-info': affectation.reglementType === 'FOURNISSEUR'
+                      }">
+                        <i class="fas fa-money-bill-wave"></i>
+                      </div>
+                      <div>
+                        <div class="fw-semibold">REG-{{affectation.reglementId}}</div>
+                        <div class="text-muted small">{{affectation.reglementNom}}</div>
+                      </div>
+                    </div>
+                  </td>
+                 <td>
+  <span class="badge" [ngClass]="{
+    'bg-primary': affectation.typeaffect === 'OPERATION_BANCAIRE',
+    'bg-info': affectation.typeaffect === 'FACTURE',
+    'bg-warning': affectation.typeaffect === 'DEPENSE'
+  }">
+    {{affectation.typeaffect}}
+  </span>
+</td>
+                 <td>
+  <div class="d-flex align-items-center">
+    <div class="me-2" [ngClass]="{
+      'text-primary': affectation.typeaffect === 'OPERATION_BANCAIRE',
+      'text-info': affectation.typeaffect === 'FACTURE',
+      'text-warning': affectation.typeaffect === 'DEPENSE'
+    }">
+      <i class="fas" [ngClass]="{
+        'fa-exchange-alt': affectation.typeaffect === 'OPERATION_BANCAIRE',
+        'fa-file-invoice': affectation.typeaffect === 'FACTURE',
+        'fa-receipt': affectation.typeaffect === 'DEPENSE'
+      }"></i>
+    </div>
+    <div>
+      <div class="fw-semibold">
+        <span *ngIf="affectation.typeaffect === 'OPERATION_BANCAIRE'">OP-{{affectation.idOperationBancaire}}</span>
+        <span *ngIf="affectation.typeaffect === 'FACTURE'">FAC-{{affectation.idPieceCommercial}}</span>
+        <span *ngIf="affectation.typeaffect === 'DEPENSE'">DEP-{{affectation.idDepense}}</span>
+      </div>
+      <div class="text-muted small" *ngIf="affectation.elementNom">
+        {{affectation.elementNom}}
+      </div>
+    </div>
+  </div>
+</td>
+    <td>
+        <span class="badge bg-success">Confirmé</span>
+      </td>
+
+                  <td class="text-center">
+    
+                    <button class="btn btn-sm btn-outline-danger" 
+                            title="Annuler" 
+                            (click)="cancelAffectation(affectation.id)" 
+                            [disabled]="isLoading"
+                            placement="top" ngbTooltip="Annuler">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredRecentAffectations.length === 0">
+                  <td colspan="8" class="text-center py-4">
+                    <i class="fas fa-info-circle text-muted mb-3"></i>
+                    <h5 class="fw-semibold">Aucune affectation trouvée</h5>
+                    <p class="text-muted">Aucune affectation ne correspond à vos critères de recherche</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-muted small">
+              Affichage de <b>{{filteredRecentAffectations.length}}</b> affectations sur <b>{{recentAffectations.length}}</b>
+            </div>
+            <nav *ngIf="totalAffectationPages > 1">
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item" [class.disabled]="currentAffectationPage === 1">
+                  <a class="page-link" (click)="changeAffectationPage(currentAffectationPage - 1)">
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li *ngFor="let page of getPages(totalAffectationPages)" 
+                    class="page-item" 
+                    [class.active]="currentAffectationPage === page">
+                  <a class="page-link" (click)="changeAffectationPage(page)">{{page}}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentAffectationPage === totalAffectationPages">
+                  <a class="page-link" (click)="changeAffectationPage(currentAffectationPage + 1)">
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

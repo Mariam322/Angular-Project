@@ -1,0 +1,121 @@
+<div class="modal show">
+  <div class="modal-backdrop"></div>
+  
+  <div class="modal-container">
+   <h2 style="color: rgba(11, 46, 101, 0.823);margin-left: 220px;margin-top:10px">Ajouter Règlement</h2>
+    
+    <form [formGroup]="reglementForm" (ngSubmit)="onSubmit()">
+      <!-- Sélection de campagne -->
+      <div class="form-group">
+        <label for="idCompaign" style="color: rgba(11, 46, 101, 0.823);">Campagne associée *</label>
+        <select id="idCompaign" formControlName="idCompaign" (change)="onCampaignSelect($event)">
+          <option value="">Sélectionner une campagne</option>
+          <option *ngFor="let campaign of filteredCampaigns" [value]="campaign.id">
+            {{ campaign.nom }} ({{ campaign.reference }}) - {{ campaign.type }}
+          </option>
+        </select>
+        <div *ngIf="reglementForm.get('idCompaign')?.invalid && reglementForm.get('idCompaign')?.touched" class="error-message">
+          La campagne est requise
+        </div>
+      </div>
+
+      <!-- Informations de la campagne (affichées après sélection) -->
+      <div class="campaign-info" *ngIf="reglementForm.get('nom')?.value">
+        <h4 style="color: rgba(11, 46, 101, 0.823); margin-bottom: 15px;">Informations de la campagne</h4>
+        
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label style="color: rgba(11, 46, 101, 0.823);">Nom</label>
+            <input type="text" class="form-control" formControlName="nom" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label style="color: rgba(11, 46, 101, 0.823);">Type</label>
+            <input type="text" class="form-control" [value]="getTypeLabel(reglementForm.get('type')?.value)" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label style="color: rgba(11, 46, 101, 0.823);">Email</label>
+            <input type="email" class="form-control" formControlName="email" readonly>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label style="color: rgba(11, 46, 101, 0.823);">Adresse</label>
+            <input type="text" class="form-control" formControlName="address" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label style="color: rgba(11, 46, 101, 0.823);">Téléphone</label>
+            <input type="text" class="form-control" formControlName="telephone" readonly>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label style="color: rgba(11, 46, 101, 0.823);">Ville</label>
+            <input type="text" class="form-control" formControlName="ville" readonly>
+          </div>
+          <div class="form-group col-md-6">
+            <label style="color: rgba(11, 46, 101, 0.823);">Pays</label>
+            <input type="text" class="form-control" formControlName="pays" readonly>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Détails du règlement -->
+      <h4 style="color: rgba(11, 46, 101, 0.823); margin-top: 20px;">Détails du règlement</h4>
+      
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="reference" style="color: rgba(11, 46, 101, 0.823);">Référence *</label>
+          <input type="text" id="reference" class="form-control" formControlName="reference" placeholder="Entrez la référence">
+          <div *ngIf="reglementForm.get('reference')?.invalid && reglementForm.get('reference')?.touched" class="error-message">
+            La référence est requise
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="montantReglemnt" style="color: rgba(11, 46, 101, 0.823);">Montant *</label>
+          <input type="number" id="montantReglemnt" class="form-control" formControlName="montantReglemnt" placeholder="Entrez le montant">
+          <div *ngIf="reglementForm.get('montantReglemnt')?.invalid && reglementForm.get('montantReglemnt')?.touched" class="error-message">
+            Le montant est requis
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="dateReglement" style="color: rgba(11, 46, 101, 0.823);">Date de règlement *</label>
+          <input type="date" id="dateReglement" class="form-control" formControlName="dateReglement">
+          <div *ngIf="reglementForm.get('dateReglement')?.invalid && reglementForm.get('dateReglement')?.touched" class="error-message">
+            La date est requise
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="modePaiement" style="color: rgba(11, 46, 101, 0.823);">Mode de paiement *</label>
+          <select id="modePaiement" class="form-control" formControlName="modePaiement">
+            <option value="">Sélectionnez un mode</option>
+            <option *ngFor="let mode of modePaiementOptions" [value]="mode">{{mode}}</option>
+          </select>
+          <div *ngIf="reglementForm.get('modePaiement')?.invalid && reglementForm.get('modePaiement')?.touched" class="error-message">
+            Le mode de paiement est requis
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" style="color: rgba(11, 46, 101, 0.823);">Description</label>
+        <textarea id="description" class="form-control" formControlName="description" rows="3" placeholder="Entrez une description"></textarea>
+      </div>
+
+      <div class="form-actions" style="margin-top: 20px; text-align: center;">
+        <button type="submit" class="btn btn-success btn-send me-2">
+          <i class="bi bi-check-circle me-1"></i> Confirmer
+        </button>
+
+        <button type="button" class="btn btn-secondary btn-send" (click)="close()">
+          <i class="bi bi-x-circle me-1"></i> Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

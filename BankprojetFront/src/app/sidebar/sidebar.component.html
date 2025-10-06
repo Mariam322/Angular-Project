@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Élégante - Design Raffiné</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SOME-HASH" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+     
+    <div class="app-container">
+        <!-- Sidebar élégante et raffinée -->
+        <div class="sidebar">
+           <img src=" ../../../../assets/images/unnamed.png"alt="SYSTEO Logo" class="logo-img">
+            <!-- Logo et profil -->
+           
+
+            <!-- Navigation -->
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-label">PRINCIPAL</div>
+                    
+                    <div class="menu-item active">
+                        <div class="menu-icon">
+                            <i class="fas fa-home menu-icon"></i>
+                        </div>
+                        <span class="menu-text">Accueil</span>
+                    </div>
+                    
+                    <div class="menu-item">
+               
+                        <div class="menu-icon">
+                             <i class="fas fa-users menu-icon"></i>
+                        </div>
+                       <a href="/user" class="menu-text">Liste utilisateurs</a>
+                    </div>
+                             <div class="menu-item">
+               
+                        <div class="menu-icon">
+                             <i class="fas fa-users menu-icon"></i>
+                        </div>
+                       <a href="/Profile" class="menu-text">profile</a>
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-icon">
+                        <i class="fas fa-file-invoice-dollar menu-icon"></i>
+                        </div>
+                        <a href="/ListeFacture" class="menu-text">Facture</a>
+                       
+                    </div>
+                    
+                    <div class="menu-item">
+                        <div class="menu-icon">
+                            <span class="icon-unicode">&#8645;</span>
+                        </div>
+                        <a href="/ListeCompany" class="menu-text">Liste Company</a>
+                    </div>
+                     <div class="menu-item">
+                        <div class="menu-icon">
+                                  <i class="fas fa-envelope"></i>
+                        </div>
+                        <a href="/emails" class="menu-text">Email</a>
+                    </div>
+                   
+               
+                   <a href="/listecompte" class="menu-item" style="text-decoration: none; color: inherit;">
+    <div class="menu-icon">
+        <i class="fa fa-building"></i>
+    </div>
+    <span class="menu-text">Comptes</span>
+</a>
+     <a href="/ListeDocuments" class="menu-item" style="text-decoration: none; color: inherit;">
+    <div class="menu-icon">
+         <i class="fas fa-file-alt"></i>
+    </div>
+    <span class="menu-text">Documents</span>
+</a>
+     <a href="/Reglement" class="menu-item" style="text-decoration: none; color: inherit;">
+    <div class="menu-icon">
+       <i class="fas fa-scale-balanced"></i>
+    </div>
+    <span class="menu-text">Reglements</span>
+</a>
+ <a href="/ListeDepense" class="menu-item" style="text-decoration: none; color: inherit;">
+    <div class="menu-icon">
+       <i class="fas fa-money-bill-wave me-2"></i>
+    </div>
+    <span class="menu-text">Dépense</span>
+</a>
+ <a href="/affectation" class="menu-item" style="text-decoration: none; color: inherit;">
+    <div class="menu-icon">
+         <i class="fas fa-file-alt"></i>
+    </div>
+    <span class="menu-text">Affectations</span>
+</a>
+                </div>
+                
+                <div class="menu-section">
+                   
+                    
+                    <div class="menu-item">
+                        
+                    </div>
+                    
+                   
+                    
+                </div>
+            </div>
+
+            <!-- Pied de la sidebar -->
+            <div class="sidebar-footer">
+            
+                
+                  <div class="sidebar-footer" style="margin-left:-80px">
+                <button class="logout-btn" href="/login" >
+                    <i class="fas fa-sign-out-alt"style="color:rgb(198, 43, 43)"></i>
+                    <span class="menu-text" style="color:rgb(198, 43, 43)">Déconnexion</span>
+                </button>
+            </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal (pour démonstration) -->
+        <div class="main-content">
+            <header class="main-header">
+                <div class="sidebar-top">
+                <div class="user-profile">
+                    <div class="avatar"><i class="fa fa-user"></i></div>
+                    <div class="user-info">
+                        <h3>{{username}}</h3>
+                        <p>Utilisateur_vente</p>
+                    </div>
+                </div>
+            </div>
+                
+              
+            </header>
+            </div>
+    </div>
+
+    <script >// Script pour la sidebar élégante et raffinée
+document.addEventListener('DOMContentLoaded', function() {
+    // Éléments DOM
+    const sidebar = document.querySelector('.sidebar');
+    const collapseBtn = document.querySelector('.collapse-btn');
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    // Fonction pour basculer l'état de la sidebar
+    function toggleSidebar() {
+        sidebar.classList.toggle('collapsed');
+        
+        // Sauvegarde de l'état dans le localStorage
+        localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+    }
+    
+    // Fonction pour activer l'élément de menu sélectionné
+    function setActiveMenuItem() {
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Supprimer la classe active de tous les éléments
+                menuItems.forEach(menuItem => {
+                    menuItem.classList.remove('active');
+                });
+                
+                // Ajouter la classe active à l'élément cliqué
+                this.classList.add('active');
+                
+                // Si on est sur mobile, fermer la sidebar après la sélection
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('mobile-visible');
+                }
+            });
+        });
+    }
+    
+    // Fonction pour gérer la sidebar sur mobile
+    function handleMobileSidebar() {
+        const hamburgerBtn = document.createElement('button');
+        hamburgerBtn.className = 'mobile-menu-toggle';
+        hamburgerBtn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" width="24" height="24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+        
+        // Ajouter le bouton hamburger au body
+        document.body.appendChild(hamburgerBtn);
+        
+        // Gestionnaire d'événement pour le bouton hamburger
+        hamburgerBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('mobile-visible');
+        });
+        
+        // Fermer la sidebar lorsqu'on clique en dehors
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !hamburgerBtn.contains(e.target) && sidebar.classList.contains('mobile-visible')) {
+                sidebar.classList.remove('mobile-visible');
+            }
+        });
+    }
+    
+    // Ajouter des tooltips pour la sidebar réduite
+    function addTooltips() {
+        menuItems.forEach(item => {
+            const tooltipText = item.querySelector('.menu-text').textContent;
+            item.setAttribute('data-tooltip', tooltipText);
+        });
+    }
+    
+    // Ajouter des animations subtiles
+    function addSubtleAnimations() {
+        // Animation au survol des éléments de menu
+        menuItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.menu-icon svg');
+                icon.style.transform = 'translateY(-2px)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.menu-icon svg');
+                icon.style.transform = '';
+            });
+        });
+        
+        // Animation au survol des cartes
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.card-icon svg');
+                icon.style.transform = 'scale(1.1)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.card-icon svg');
+                icon.style.transform = '';
+            });
+        });
+    }
+    
+    // Initialisation
+    function init() {
+        // Vérifier l'état sauvegardé de la sidebar
+        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        if (isCollapsed) {
+            sidebar.classList.add('collapsed');
+        }
+        
+        // Ajouter les écouteurs d'événements
+        collapseBtn.addEventListener('click', toggleSidebar);
+        
+        // Initialiser la navigation active
+        setActiveMenuItem();
+        
+        // Initialiser la sidebar mobile
+        if (window.innerWidth <= 992) {
+            handleMobileSidebar();
+        }
+        
+        // Ajouter des tooltips
+        addTooltips();
+        
+        // Ajouter des animations subtiles
+        addSubtleAnimations();
+    }
+    
+    // Lancer l'initialisation
+    init();
+    
+    // Gérer le redimensionnement de la fenêtre
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 992) {
+            if (!document.querySelector('.mobile-menu-toggle')) {
+                handleMobileSidebar();
+            }
+        }
+    });
+    
+    // Ajouter des styles CSS supplémentaires pour les animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        .menu-item.active {
+            animation: subtle-pulse 2s infinite;
+        }
+        
+        .card:hover {
+            border-color: var(--primary-light);
+        }
+        
+        .notification-dot {
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .menu-item:hover .menu-text {
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

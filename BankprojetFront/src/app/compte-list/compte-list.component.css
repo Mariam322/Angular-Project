@@ -1,0 +1,731 @@
+
+        :root {   
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #93c5fd;
+            --success: #10b981;
+            --success-dark: #059669;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --danger-dark: #dc2626;
+            --info: #06b6d4;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray-50: #f9fafb;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+             background: linear-gradient(135deg, var(--gray-50) 0%, #ffffff 100%);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+             background:  #4a6fa5;
+            margin-top: -600px;
+            margin-left: 250px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--gray-200);
+            margin-top: -750px;
+        }
+ :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Layout Components */
+        .invoice-container {
+            background: rgb(220, 181, 181);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin: 2rem auto;
+            overflow: hidden;
+            max-width: 1400px;
+            margin-top: -1200px;
+        }
+
+        .sidebar {
+            background:  #34495e ;
+            min-height: 100vh;
+            padding: 0;
+        }
+ .amount-positive { color: green; }
+        .amount-negative { color: red; }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .status-rapproche { background-color: #d4edda; color: #155724; }
+        .status-en-attente { background-color: #fff3cd; color: #856404; }
+        .status-valide { background-color: #cce5ff; color: #004085; }
+        .status-rejete { background-color: #f8d7da; color: #721c24; }
+        .btn-primary-custom {
+            background-color: rgba(15, 47, 90, 0.776);
+            border-color: rgba(15, 47, 90, 0.776);
+            color: white;
+        }
+        .search-filter-bar {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .content-area {
+            padding: 2rem;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        /* Navigation Styles */
+        .brand-header {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item-custom {
+            margin: 0.5rem 1rem;
+        }
+
+        .nav-link-custom {
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .table-custom thead th {
+           
+            color: #09337be9;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+            background-color:  #d6e3e8a1;
+        }
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Card Components */
+        .invoice-card {
+            background: rgb(255, 255, 255);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .invoice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .page-header {
+            background: #547bb6;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        /* Button Styles */
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--secondary-color), #5dade2);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        .btn-success-custom {
+            background: linear-gradient(45deg, var(--success-color), #58d68d);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, var(--accent-color), #ec7063);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Form Styles */
+        .form-control-custom {
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+.form-select{
+    border-radius: 10px;
+   
+    padding: 8px 15px;
+    width: 100%;
+    max-width: 200px;
+    font-size: 0.9rem;
+    height: auto;
+    border-color: #16283a;
+    box-shadow: #2c3e50;
+}
+        .form-control-custom:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        /* Table Styles */
+        .table-custom {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+.form-control{
+    border-radius: 10px;
+   
+    padding: 8px 15px;
+    width: 100%;
+    max-width: 200px;
+    font-size: 0.9rem;
+    height: auto;
+    border-color: #16283a;
+    box-shadow: #2c3e50;
+}
+
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    margin: 0 3px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn.eye {
+    background-color: rgba(15, 83, 177, 0.1);
+    color: rgb(15, 83, 177);
+}
+
+.action-btn.pen {
+    background-color: rgba(10, 80, 18, 0.1);
+    color: rgb(10, 80, 18);
+}
+
+.action-btn.trash {
+    background-color: rgba(181, 18, 18, 0.1);
+    color: rgb(181, 18, 18);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn.eye:hover {
+    background-color: rgba(15, 83, 177, 0.2);
+}
+
+.action-btn.pen:hover {
+    background-color: rgba(10, 80, 18, 0.2);
+}
+
+.action-btn.trash:hover {
+    background-color: rgba(181, 18, 18, 0.2);
+}
+        .table-custom tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .table-custom tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-paid {
+            background: #d5f4e6;
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: var(--warning-color);
+        }
+
+        .status-overdue {
+            background: #f8d7da;
+            color: var(--accent-color);
+        }
+
+        /* Invoice Preview Styles */
+        .invoice-preview {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin: 2rem 0;
+        }
+
+        .company-header {
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .invoice-details {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+
+        .total-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+        }
+
+        .invoice-item-row {
+            background: var(--light-bg);
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .invoice-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+            
+            .content-area {
+                padding: 1rem;
+            }
+            
+            .invoice-card {
+                padding: 1.5rem;
+            }
+
+            .sidebar {
+                min-height: auto;
+            }
+        }
+
+        /* Utility Classes */
+        .text-primary-custom {
+            color: var(--primary-color) !important;
+        }
+
+        .bg-light-custom {
+            background-color: var(--light-bg) !important;
+        }
+
+        .shadow-custom {
+            box-shadow: var(--shadow-light) !important;
+        }
+
+        .border-radius-custom {
+            border-radius: var(--border-radius) !important;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar,
+            .btn,
+            .page-header {
+                display: none !important;
+            }
+            
+            .invoice-preview {
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+        }
+        .header-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0.5;
+            animation: pulse 15s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            100% { transform: translate(50px, -50px) scale(1.2); opacity: 0.2; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.75rem;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+        }
+
+        .account-count {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .custom-table {
+            width: 100%;
+            font-size: 0.875rem;
+            border-collapse: collapse;
+        }
+
+        .custom-table thead th {
+            background: var(--gray-50);
+            color: var(--gray-600);
+            font-weight: 600;
+            padding: 1rem 1.25rem;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        /* Fixer les largeurs des colonnes */
+        .custom-table th:nth-child(1),
+        .custom-table td:nth-child(1) {
+            width: 15%;
+        }
+
+        .custom-table th:nth-child(2),
+        .custom-table td:nth-child(2) {
+            width: 25%;
+        }
+
+        .custom-table th:nth-child(3),
+        .custom-table td:nth-child(3) {
+            width: 25%;
+        }
+
+        .custom-table th:nth-child(4),
+        .custom-table td:nth-child(4) {
+            width: 15%;
+        }
+
+        .custom-table th:nth-child(5),
+        .custom-table td:nth-child(5) {
+            width: 20%;
+        }
+
+        .custom-table tbody td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+            transition: background-color 0.2s ease;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        .custom-table tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-table tbody tr:not(:last-child) td {
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .custom-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .add-account-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 16px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .add-account-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            color: rgb(255, 255, 255);
+        }
+
+        .action-btn {
+            background: white;
+            color: rgb(5, 68, 112);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            color: rgb(3, 7, 65);
+        }
+
+        .action-icon {
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .action-icon.edit {
+            color: rgb(4, 97, 37);
+        }
+
+        .action-icon.edit:hover {
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .action-icon.delete {
+            color: rgb(161, 11, 11);
+        }
+
+        .action-icon.delete:hover {
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .clickable {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .clickable:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 1.5rem;
+            }
+            
+            .header-section::before {
+                display: none;
+            }
+            
+            .custom-table thead {
+                display: none;
+            }
+            
+            .custom-table tbody tr {
+                display: block;
+                margin-bottom: 1rem;
+                border-radius: 8px;
+                box-shadow: var(--shadow-sm);
+                overflow: hidden;
+            }
+            
+            .custom-table tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid var(--gray-200);
+                width: 100%;
+            }
+            
+            .custom-table tbody td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--gray-600);
+                margin-right: 1rem;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+  
+               

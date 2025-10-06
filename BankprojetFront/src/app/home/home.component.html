@@ -1,0 +1,1250 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        min-height: 100vh;
+        color: #1a202c;
+        background-color: #f8fafc;
+    }
+
+    .dashboard-container {
+        padding: 32px;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .dashboard-header {
+        position: relative;
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .dashboard-header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .dashboard-header h1 .material-icons {
+        margin-right: 12px;
+        font-size: 32px;
+        color: #4c51bf;
+    }
+
+    .dashboard-header p {
+        color: #64748b;
+        font-size: 15px;
+        max-width: 600px;
+        line-height: 1.5;
+    }
+
+    .period-selector {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .period-selector select {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        background: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .period-selector select:hover {
+        border-color: #cbd5e1;
+    }
+
+    .stats-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(226, 232, 240, 0.5);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: currentColor;
+    }
+
+    .mat-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .stat-icon-container {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+        background-color: rgba(0, 0, 0, 0.05);
+        color: currentColor;
+    }
+
+    .stat-icon-container .material-icons {
+        font-size: 24px;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .mat-card-title {
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0 0 4px 0;
+        color: #1a202c;
+    }
+
+    .mat-card-subtitle {
+        font-size: 14px;
+        color: #64748b;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .trend-indicator {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        margin-top: 8px;
+        font-weight: 500;
+    }
+
+    .trend-indicator.up {
+        color: #10b981;
+    }
+
+    .trend-indicator.down {
+        color: #ef4444;
+    }
+
+    .trend-indicator.neutral {
+        color: #64748b;
+    }
+
+    .trend-indicator .material-icons {
+        font-size: 18px;
+        margin-right: 4px;
+    }
+
+    .section-card {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 32px;
+        padding: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(226, 232, 240, 0.5);
+        transition: all 0.3s ease;
+    }
+
+    .section-card:hover {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .section-card .mat-card-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .section-card .mat-card-content {
+        padding: 16px 24px 24px 24px;
+    }
+
+    .section-card .mat-card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 0;
+    }
+
+    .section-card .mat-card-subtitle {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 400;
+    }
+
+    .section-card .section-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .section-card .section-actions button {
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s;
+        padding: 6px 10px;
+        border-radius: 6px;
+    }
+
+    .section-card .section-actions button:hover {
+        color: #4c51bf;
+        background: rgba(76, 81, 191, 0.05);
+    }
+
+    .section-card .section-actions .material-icons {
+        font-size: 18px;
+        margin-left: 4px;
+    }
+
+    .charts-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 320px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Styles spécifiques à la section Répartition des Factures */
+    .invoice-distribution-container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .invoice-legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        background: #f8fafc;
+        border-radius: 8px;
+        font-size: 13px;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    
+    .legend-item:hover {
+        background: #f1f5f9;
+    }
+    
+    .legend-item.inactive {
+        opacity: 0.5;
+    }
+    
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        margin-right: 8px;
+        transition: all 0.2s;
+    }
+    
+    .legend-label {
+        flex: 1;
+        color: #334155;
+        font-weight: 500;
+    }
+    
+    .legend-value {
+        color: #64748b;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 12px;
+    }
+    
+    .invoice-chart-container {
+        position: relative;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .chart-arcs {
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        transform: rotate(-90deg);
+    }
+    
+    .chart-arc {
+        height: 100%;
+        position: relative;
+        transition: all 0.4s ease;
+    }
+    
+    .chart-arc:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+    }
+    
+    .arc-percentage {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        transform: rotate(90deg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .chart-arc:hover .arc-percentage {
+        opacity: 1;
+    }
+    
+    .chart-center {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        z-index: 2;
+    }
+    
+    .total-invoices {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .center-label {
+        font-size: 12px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Couleurs pour les différents statuts */
+    .status-payee-color { background: #10b981; }
+    .status-non_payee-color { background: #ef4444; }
+    .status-partiellement_payee-color { background: #f59e0b; }
+    .status-en_attente-color { background: #3b82f6; }
+    .status-en_retard-color { background: #8b5cf6; }
+
+    .activity-section .activity-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+    .activity-list h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #1a202c;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+    }
+
+    .activity-list h3 .material-icons {
+        font-size: 20px;
+        margin-right: 8px;
+        color: #64748b;
+    }
+
+    .mat-list {
+        padding: 0;
+    }
+
+    .mat-list-item {
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background-color 0.2s ease;
+    }
+
+    .mat-list-item:last-child {
+        border-bottom: none;
+    }
+
+    .mat-list-item:hover {
+        background-color: #f8fafc;
+    }
+
+    .list-item-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        padding: 0;
+    }
+
+    .invoice-number,
+    .expense-number {
+        font-weight: 600;
+        color: #1a202c;
+        flex: 0 0 80px;
+        font-size: 13px;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .invoice-client,
+    .expense-supplier {
+        flex: 1;
+        padding: 0 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #475569;
+        font-size: 14px;
+    }
+
+    .invoice-amount,
+    .expense-amount {
+        font-weight: 600;
+        flex: 0 0 100px;
+        text-align: right;
+        color: #1a202c;
+        font-size: 14px;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .invoice-status {
+        flex: 0 0 100px;
+        text-align: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .invoice-status.status-payee {
+        background-color: #ecfdf5;
+        color: #065f46;
+    }
+
+    .invoice-status.status-non_payee {
+        background-color: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .invoice-status.status-partiellement_payee {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+
+    .invoice-status.status-en_attente {
+        background-color: #dbeafe;
+        color: #1e40af;
+    }
+
+    .expense-date {
+        flex: 0 0 80px;
+        text-align: right;
+        font-size: 12px;
+        color: #64748b;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .operation-item {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 0;
+        align-items: center;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background-color 0.2s ease;
+    }
+
+    .operation-item:last-child {
+        border-bottom: none;
+    }
+
+    .operation-item:hover {
+        background-color: #f8fafc;
+    }
+
+    .operation-date {
+        flex: 0 0 100px;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 500;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .operation-description {
+        flex: 1;
+        padding: 0 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #475569;
+        font-size: 14px;
+    }
+
+    .operation-debit {
+        flex: 0 0 100px;
+        text-align: right;
+        color: #ef4444;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .operation-credit {
+        flex: 0 0 100px;
+        text-align: right;
+        color: #10b981;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .operation-balance {
+        flex: 0 0 120px;
+        text-align: right;
+        font-weight: 600;
+        color: #1a202c;
+        font-size: 14px;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        padding: 32px;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 32px;
+        color: #94a3b8;
+        font-style: italic;
+        font-size: 14px;
+    }
+
+    /* Color themes for stat cards */
+    .stat-card.clients {
+        color: #3b82f6;
+    }
+
+    .stat-card.suppliers {
+        color: #f59e0b;
+    }
+
+    .stat-card.invoices {
+        color: #10b981;
+    }
+
+    .stat-card.expenses {
+        color: #ef4444;
+    }
+
+    .stat-card.balance {
+        color: #8b5cf6;
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .stats-cards-grid {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+    }
+
+    @media (max-width: 960px) {
+        .charts-section {
+            grid-template-columns: 1fr;
+        }
+        
+        .activity-section .activity-content {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .invoice-legend {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 16px;
+        }
+        
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 24px;
+        }
+        
+        .stats-cards-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        
+        .stat-card {
+            padding: 20px;
+        }
+        
+        .mat-card-title {
+            font-size: 24px;
+        }
+
+        .invoice-legend {
+            grid-template-columns: 1fr;
+        }
+
+        .chart-center {
+            width: 80px;
+            height: 80px;
+        }
+
+        .total-invoices {
+            font-size: 20px;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card {
+        animation: fadeIn 0.4s ease-out;
+    }
+
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+    .stat-card:nth-child(5) { animation-delay: 0.5s; }
+    .stat-card:nth-child(6) { animation-delay: 0.6s; }
+
+    .section-card {
+        animation: fadeIn 0.4s ease-out 0.3s both;
+    }
+
+    /* Badge for new items */
+    .new-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background-color: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    /* Quick actions */
+    .quick-actions {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+    }
+
+    .quick-action {
+        background: white;
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(226, 232, 240, 0.5);
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .quick-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .quick-action-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .quick-action-text {
+        flex: 1;
+    }
+
+    .quick-action-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: #1a202c;
+    }
+
+    .quick-action-desc {
+        font-size: 12px;
+        color: #64748b;
+    }
+
+    /* Account selector */
+    .account-selector {
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .account-selector select {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        background: white;
+        font-size: 14px;
+        cursor: pointer;
+        appearance: none;
+        transition: all 0.2s;
+    }
+
+    .account-selector select:hover {
+        border-color: #cbd5e1;
+    }
+
+    .account-selector::after {
+        content: 'expand_more';
+        font-family: 'Material Icons';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #64748b;
+    }
+
+    /* Tooltip styles */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: #1e293b;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    /* Dark mode toggle */
+    .dark-mode-toggle {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        cursor: pointer;
+        z-index: 100;
+        transition: all 0.3s;
+    }
+
+    .dark-mode-toggle:hover {
+        transform: scale(1.1);
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+        background-color: #0f172a;
+        color: #f8fafc;
+    }
+
+    body.dark-mode .dashboard-header h1,
+    body.dark-mode .mat-card-title,
+    body.dark-mode .invoice-number,
+    body.dark-mode .expense-number,
+    body.dark-mode .invoice-amount,
+    body.dark-mode .expense-amount,
+    body.dark-mode .operation-balance,
+    body.dark-mode .total-invoices,
+    body.dark-mode .quick-action-title {
+        color: #f8fafc;
+    }
+
+    body.dark-mode .stat-card,
+    body.dark-mode .section-card,
+    body.dark-mode .quick-action {
+        background-color: #1e293b;
+        border-color: #334155;
+    }
+
+    body.dark-mode .section-card .mat-card-header,
+    body.dark-mode .activity-list h3 {
+        border-color: #334155;
+    }
+
+    body.dark-mode .mat-card-subtitle,
+    body.dark-mode .operation-date,
+    body.dark-mode .operation-description,
+    body.dark-mode .invoice-client,
+    body.dark-mode .expense-supplier,
+    body.dark-mode .center-label,
+    body.dark-mode .quick-action-desc {
+        color: #94a3b8;
+    }
+
+    body.dark-mode .legend-item {
+        background-color: #334155;
+    }
+
+    body.dark-mode .legend-label {
+        color: #e2e8f0;
+    }
+
+    body.dark-mode .no-data {
+        color: #64748b;
+    }
+
+    body.dark-mode .account-selector select,
+    body.dark-mode .period-selector select {
+        background-color: #1e293b;
+        border-color: #334155;
+        color: #f8fafc;
+    }
+
+    body.dark-mode .account-selector::after {
+        color: #94a3b8;
+    }
+
+    body.dark-mode .dark-mode-toggle {
+        background: #1e293b;
+        color: #f8fafc;
+    }
+</style>
+
+<app-sidebar></app-sidebar>
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div>
+            <h1><i class="material-icons">dashboard</i> Tableau de Bord</h1>
+            <p>Aperçu global de votre activité et performances financières</p>
+        </div>
+        
+        <div class="period-selector">
+            <select [(ngModel)]="selectedPeriod" (change)="onPeriodChange()">
+                <option value="7">7 derniers jours</option>
+                <option value="30" selected>30 derniers jours</option>
+                <option value="90">3 derniers mois</option>
+                <option value="365">12 derniers mois</option>
+                <option value="custom">Période personnalisée</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <div class="quick-action" (click)="createNewInvoice()">
+            <div class="quick-action-icon" style="background-color: #10b981;">
+                <i class="material-icons">receipt</i>
+            </div>
+            <div class="quick-action-text">
+<a href="/ListeFacture" class="quick-action-title">Nouvelle Facture</a>
+                <div class="quick-action-desc">Créer une facture pour un client</div>
+            </div>
+            <i class="material-icons">chevron_right</i>
+        </div>
+        
+        <div class="quick-action" (click)="recordNewExpense()">
+            <div class="quick-action-icon" style="background-color: #ef4444;">
+                <i class="material-icons">payments</i>
+            </div>
+            <div class="quick-action-text">
+                <div class="quick-action-title">Nouvelle Dépense</div>
+                <div class="quick-action-desc">Enregistrer une dépense</div>
+            </div>
+            <i class="material-icons">chevron_right</i>
+        </div>
+        
+        <div class="quick-action" (click)="addNewClient()">
+            <div class="quick-action-icon" style="background-color: #3b82f6;">
+                <i class="material-icons">person_add</i>
+            </div>
+            <div class="quick-action-text">
+                <div class="quick-action-title">Nouvelle compagnie</div>
+                <div class="quick-action-desc">Ajouter une compagnie</div>
+            </div>
+            <i class="material-icons">chevron_right</i>
+        </div>
+        
+        <div class="quick-action" (click)="viewReports()">
+            <div class="quick-action-icon" style="background-color: #8b5cf6;">
+                <i class="material-icons">assessment</i>
+            </div>
+            <div class="quick-action-text">
+                <div class="quick-action-title">Documents</div>
+                <div class="quick-action-desc">Ajouter des documents</div>
+            </div>
+            <i class="material-icons">chevron_right</i>
+        </div>
+    </div>
+
+    <!-- Section Résumé -->
+    <div class="stats-cards-grid">
+        <!-- Carte Clients -->
+        <div class="stat-card clients">
+            <div class="mat-card-header">
+                <div class="stat-icon-container">
+                    <i class="material-icons">groups</i>
+                </div>
+                <div class="stat-content">
+                    <div class="mat-card-title">8</div>
+                    <div class="mat-card-subtitle">Clients</div>
+                    <div class="trend-indicator" [ngClass]="clientTrend >= 0 ? 'up' : 'down'">
+                        <i class="material-icons">{{ clientTrend >= 0 ? 'trending_up' : 'trending_down' }}</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Fournisseurs -->
+        
+
+        <!-- Carte Factures -->
+        <div class="stat-card invoices">
+            <div class="mat-card-header">
+                <div class="stat-icon-container">
+                    <i class="material-icons">description</i>
+                </div>
+                <div class="stat-content">
+                    <div class="mat-card-title">5</div>
+                    <div class="mat-card-subtitle">Factures</div>
+                    <div class="trend-indicator" [ngClass]="invoiceTrend >= 0 ? 'up' : 'down'">
+                        <i class="material-icons">{{ invoiceTrend >= 0 ? 'trending_up' : 'trending_down' }}</i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Dépenses -->
+        <div class="stat-card expenses">
+            <div class="mat-card-header">
+                <div class="stat-icon-container">
+                    <i class="material-icons">receipt_long</i>
+                </div>
+                <div class="stat-content">
+                    <div class="mat-card-title">5</div>
+                    <div class="mat-card-subtitle">Dépenses</div>
+                    <div class="trend-indicator" [ngClass]="expenseTrend >= 0 ? 'up' : 'down'">
+                        <i class="material-icons">{{ expenseTrend >= 0 ? 'trending_up' : 'trending_down' }}</i>
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Solde Total -->
+      
+
+        <!-- Carte Nombre de Comptes -->
+       
+    </div>
+
+    <!-- Section Graphiques -->
+    <div class="charts-section">
+        <div class="section-card">
+            <div class="mat-card-header">
+                <div>
+                    <div class="mat-card-title">Évolution Mensuelle</div>
+                    <div class="mat-card-subtitle">Chiffre d'affaires vs Dépenses sur les {{ selectedPeriod }} derniers jours</div>
+                </div>
+                <div class="section-actions">
+                    <button (click)="exportChartData()">
+                        Exporter
+                        <i class="material-icons">download</i>
+                    </button>
+                    <button (click)="toggleChartType()">
+                        {{ chartType === 'line' ? 'Voir en barres' : 'Voir en ligne' }}
+                        <i class="material-icons">{{ chartType === 'line' ? 'bar_chart' : 'show_chart' }}</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mat-card-content">
+                <div class="chart-container">
+                    <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="mat-card-header">
+                <div>
+                    <div class="mat-card-title">Répartition des Factures</div>
+                    <div class="mat-card-subtitle">Par statut de paiement</div>
+                </div>
+                <div class="section-actions">
+                    <button (click)="viewInvoiceDetails()">
+                        Voir détail
+                        <i class="material-icons">bar_chart</i>
+                    </button>
+                </div>
+            </div>
+            <div class="mat-card-content">
+                <div class="invoice-distribution-container">
+                    <!-- Légende dynamique -->
+                    <div class="invoice-legend">
+                        <div class="legend-item" *ngFor="let status of invoiceStatusData" 
+                             (click)="toggleInvoiceStatus(status.statut)"
+                             [class.inactive]="!isStatusActive(status.statut)">
+                            <div class="legend-color" [ngClass]="'status-' + status.statut.toLowerCase().replace(' ', '_') + '-color'"></div>
+                            <div class="legend-label">{{ getInvoiceStatusLabel(status.statut) }}</div>
+                            <div class="legend-value">{{ status.count }} ({{ status.percentage }}%)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Graphique dynamique -->
+                    <div class="invoice-chart-container">
+                        <div class="chart-arcs">
+                            <div class="chart-arc" *ngFor="let status of invoiceStatusData" 
+                                 [style.flex-grow]="isStatusActive(status.statut) ? status.percentage : 0"
+                                 [style.background]="isStatusActive(status.statut) ? getStatusColor(status.statut) : 'transparent'"
+                                 [style.transition]="'flex-grow 0.5s ease'">
+                                <div class="arc-percentage">{{ status.percentage }}%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-center">
+                            <div class="total-invoices">{{ getTotalInvoices() }}</div>
+                            <div class="center-label">Factures</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Dernières Opérations -->
+   <!--  <div class="section-card">
+        <div class="mat-card-header">
+            <div>
+                <div class="mat-card-title">Dernières Opérations Bancaires</div>
+                <div class="mat-card-subtitle">Les 10 dernières transactions sur vos comptes</div>
+            </div>
+            <div class="section-actions">
+                <button (click)="viewAllOperations()">
+                    Voir tout
+                    <i class="material-icons">chevron_right</i>
+                </button>
+                <button (click)="refreshBankData()" [disabled]="isLoadingBankData">
+                    <i class="material-icons">refresh</i>
+                </button>
+            </div>
+        </div>
+        <div class="mat-card-content">
+            <div class="account-selector">
+               
+            </div>
+            
+            <div class="mat-list">
+                <div class="mat-list-item" *ngFor="let op of recentOperations">
+                    <div class="operation-item">
+                        <span class="operation-date">{{ op.dateOperation | date:'dd/MM/yyyy' }}</span>
+                        <span class="operation-description" [title]="op.description || 'Aucune description'">
+                            {{ op.numCheque || 'Sans référence' }}
+                            <span *ngIf="op.description" class="tooltip">
+                                <i class="material-icons" style="font-size: 16px;">info</i>
+                                <span class="tooltip-text">{{ op.description }}</span>
+                            </span>
+                        </span>
+                        <span class="operation-debit" *ngIf="op.debit > 0">
+                            Débit {{ op.debit | currency:'TND':'symbol':'1.2-2':'fr' }}
+                        </span>
+                        <span class="operation-credit" *ngIf="op.credit > 0">
+                            Crédit {{ op.credit | currency:'TND':'symbol':'1.2-2':'fr' }}
+                        </span>
+                        <span class="operation-balance">
+                            {{ op.solde | currency:'TND':'symbol':'1.2-2':'fr' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div *ngIf="isLoadingBankData" class="loading-spinner">
+                <mat-spinner diameter="40"></mat-spinner>
+            </div>
+            
+            <div *ngIf="!isLoadingBankData && recentOperations.length === 0" class="no-data">
+                Aucune opération récente à afficher
+            </div>
+        </div>
+    </div>-->
+    <!-- Section Dernières Activités -->
+    <div class="section-card activity-section">
+        <div class="mat-card-header">
+            <div>
+                <div class="mat-card-title">Activité Récente</div>
+                <div class="mat-card-subtitle">Dernières transactions et opérations</div>
+            </div>
+            <div class="section-actions">
+                <button (click)="viewActivityHistory()">
+                    Voir l'historique
+                    <i class="material-icons">history</i>
+                </button>
+            </div>
+        </div>
+        <div class="mat-card-content">
+            <div class="activity-content">
+                <!-- Dernières Factures -->
+                <div class="activity-list">
+                    <h3><i class="material-icons">receipt</i> Dernières Factures</h3>
+                    <div class="mat-list">
+                        <div class="mat-list-item" *ngFor="let invoice of recentInvoices" (click)="viewInvoice(invoice.idFacture)">
+                            <div class="list-item-content">
+                                <span class="invoice-number">#{{ invoice.numeroFacture }}</span>
+                                <span class="invoice-client">{{ invoice.nom }}</span>
+                                <span class="invoice-amount">{{ invoice.montantTtc | currency:'TND':'symbol':'1.2-2':'fr' }}</span>
+                                <span class="invoice-status" [ngClass]="'status-' + invoice.statut.toLowerCase()">
+                                    {{ getInvoiceStatusLabel(invoice.statut) }}
+                                    <span *ngIf="isNewInvoice(invoice.dateFacture)" class="new-badge">N</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="recentInvoices.length === 0" class="no-data">
+                        Aucune facture récente
+                    </div>
+                </div>
+
+                <!-- Dernières Dépenses -->
+              <div class="activity-list">
+  <h3><i class="material-icons">payments</i> Dernières Dépenses</h3>
+  <div class="mat-list">
+    <div class="mat-list-item">
+      <div class="list-item-content">
+        <span class="expense-number">#DEP-2025-005</span>
+        <span class="expense-date">20/06</span>
+      </div>
+    </div>
+    <div class="mat-list-item">
+      <div class="list-item-content">
+        <span class="expense-number">#DEP-2025-003</span>
+        <span class="expense-date">10/06</span>
+      </div>
+    </div>
+    <div class="mat-list-item">
+      <div class="list-item-content">
+        <span class="expense-number">#DEP-2025-002</span>
+        <span class="expense-date">05/06</span>
+      </div>
+    </div>
+    <div class="mat-list-item">
+      <div class="list-item-content">
+        <span class="expense-number">#DEP-2025-001</span>
+        <span class="expense-date">01/06</span>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+</div>
+
+<!-- Dark mode toggle -->
+<div class="dark-mode-toggle" (click)="toggleDarkMode()">
+    <i class="material-icons">{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</i>
+</div>

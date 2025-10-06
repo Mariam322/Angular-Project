@@ -1,0 +1,251 @@
+/* Styles généraux */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --depense-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --dark-bg: #1a1a2e;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --depense-color: #ff6d00;
+  --depense-light: #ff9e40;
+}
+
+/* Styles spécifiques pour la modal de dépense */
+.depense-title {
+  color: rgb(167, 33, 33);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+ 
+
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  padding: 25px;
+  width: 90%;
+  max-width: 750px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 20px 0;
+  border: 1px solid rgba(255, 109, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-control, .form-select {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid rgba(255, 109, 0, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--depense-color);
+  box-shadow: 0 0 0 0.2rem rgba(255, 109, 0, 0.25);
+  outline: none;
+}
+
+/* Boutons */
+.btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-success {
+  background-color: rgb(9, 90, 9);
+  color: white;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #e65100;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 109, 0, 0.3);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  border: 1px solid var(--depense-color);
+  color: var(--depense-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: rgba(255, 109, 0, 0.1);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* Lignes de dépense */
+.ligne-item {
+  background: rgba(255, 109, 0, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+  border-left: 3px solid var(--depense-light);
+}
+
+/* Card des totaux */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 109, 0, 0.03);
+  border-top: 2px solid var(--depense-light);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-body div {
+  padding: 8px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .row {
+    flex-direction: column;
+  }
+  
+  .col-md-6, .col-md-4, .col-md-3, .col-md-2, .col-md-1 {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .depense-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Icônes */
+.fas {
+  font-size: 14px;
+}
+
+/* Disabled state */
+:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Validation */
+.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.ng-valid.ng-touched {
+  border-color: #28a745;
+}
+
+/* Effet de chargement */
+.isSaving {
+  position: relative;
+}
+
+.isSaving::after {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--depense-light);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--depense-color);
+}

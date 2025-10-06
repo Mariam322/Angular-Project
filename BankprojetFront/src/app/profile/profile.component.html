@@ -1,0 +1,182 @@
+
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="content-container">
+    <div class="profile-grid">
+      <!-- Colonne Informations personnelles -->
+      <div class="profile-column">
+        <form [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()" class="profile-form">
+          <div class="form-header">
+            <mat-icon class="form-icon">person</mat-icon>
+            <h2 class="form-title">Informations personnelles</h2>
+            <p class="form-subtitle">Mettez à jour vos coordonnées</p>
+          </div>
+
+          <div class="form-content">
+            <!-- Username -->
+            <div class="form-section form-field-reference">
+  <label for="username">Nom d'utilisateur</label>
+  <div class="input-with-icon">
+    <mat-icon class="input-icon">person_outline</mat-icon>
+    <input 
+      id="username"
+      type="text" 
+      formControlName="username" 
+      required
+      placeholder="  Votre nom d'utilisateur">
+  </div>
+  <div *ngIf="profileForm.get('username')?.hasError('required')" class="error-message">
+    Ce champ est obligatoire
+  </div>
+</div>
+
+            <!-- Prénom -->
+            <div class="form-section form-field-reference">
+              <label for="firstName">Prénom</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">badge</mat-icon>
+                <input 
+                  id="firstName"
+                  type="text" 
+                  formControlName="firstName" 
+                  required
+                  placeholder="  Ex. Jean">
+              </div>
+              <div *ngIf="profileForm.get('firstName')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+            </div>
+
+            <!-- Nom -->
+            <div class="form-section form-field-reference">
+              <label for="lastName">Nom</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">badge</mat-icon>
+                <input 
+                  id="lastName"
+                  type="text" 
+                  formControlName="lastName" 
+                  required
+                  placeholder="  Ex. Dupont">
+              </div>
+              <div *ngIf="profileForm.get('lastName')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-section form-field-reference">
+              <label for="email">Email</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">email</mat-icon>
+                <input 
+                  id="email"
+                  type="email" 
+                  formControlName="email" 
+                  required
+                  placeholder="  Ex. jean.dupont@example.com">
+              </div>
+              <div *ngIf="profileForm.get('email')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+              <div *ngIf="profileForm.get('email')?.hasError('email')" class="error-message">
+                Adresse email invalide
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button 
+                type="submit" 
+                class="button-reference button-primary"
+                [disabled]="profileForm.invalid">
+                <mat-icon>save</mat-icon>
+                <span>Enregistrer</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Colonne Sécurité -->
+      <div class="profile-column">
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="profile-form">
+          <div class="form-header">
+            <mat-icon class="form-icon">lock</mat-icon>
+            <h2 class="form-title">Sécurité du compte</h2>
+            <p class="form-subtitle">Changez votre mot de passe</p>
+          </div>
+
+          <div class="form-content">
+            <!-- Mot de passe actuel -->
+            <div class="form-section form-field-reference">
+              <label for="currentPassword">Mot de passe actuel</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">vpn_key</mat-icon>
+                <input 
+                  id="currentPassword"
+                  type="password" 
+                  formControlName="currentPassword" 
+                  required
+                  placeholder="  Entrez votre mot de passe actuel">
+              </div>
+              <div *ngIf="passwordForm.get('currentPassword')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+            </div>
+
+            <!-- Nouveau mot de passe -->
+            <div class="form-section form-field-reference">
+              <label for="newPassword">Nouveau mot de passe</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">lock_reset</mat-icon>
+                <input 
+                  id="newPassword"
+                  type="password" 
+                  formControlName="newPassword" 
+                  required
+                  placeholder="  Entrez votre nouveau mot de passe">
+              </div>
+              <div class="form-hint">Minimum 6 caractères</div>
+              <div *ngIf="passwordForm.get('newPassword')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+              <div *ngIf="passwordForm.get('newPassword')?.hasError('minlength')" class="error-message">
+                Le mot de passe doit contenir au moins 6 caractères
+              </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="form-section form-field-reference">
+              <label for="confirmNewPassword">Confirmer le mot de passe</label>
+              <div class="input-with-icon">
+                <mat-icon class="input-icon">lock_reset</mat-icon>
+                <input 
+                  id="confirmNewPassword"
+                  type="password" 
+                  formControlName="confirmNewPassword" 
+                  required
+                  placeholder="  Confirmez votre nouveau mot de passe">
+              </div>
+              <div *ngIf="passwordForm.get('confirmNewPassword')?.hasError('required')" class="error-message">
+                Ce champ est obligatoire
+              </div>
+              <div *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirmNewPassword')?.touched" class="error-message">
+                Les mots de passe ne correspondent pas
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button 
+                type="submit" 
+                class="button-reference button-primary"
+                [disabled]="passwordForm.invalid">
+                <mat-icon>autorenew</mat-icon>
+                <span>Mettre à jour</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

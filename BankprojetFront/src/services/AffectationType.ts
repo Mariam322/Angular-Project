@@ -1,0 +1,5 @@
+export enum AffectationType {
+  FACTURE = 'FACTURE',
+  DEPENSE = 'DEPENSE',
+  OPERATION_BANCAIRE = 'OPERATION_BANCAIRE'
+}

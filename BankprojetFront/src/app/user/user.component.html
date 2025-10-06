@@ -1,0 +1,305 @@
+
+<body style="margin-bottom: 2500px;">
+   
+
+    <!-- Main Content -->
+    <div class="content" >
+        <div class="container-fluid">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h4 class="mb-1">Bienvenue, Linda !</h4>
+                    <p class="text-muted">Vous avez 26 nouveaux messages et 5 nouvelles notifications.</p>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>Sessions Aujourd'hui</h5>
+                            <span class="badge rounded-pill bg-primary">
+                                <i class="bi bi-arrow-up"></i>
+                            </span>
+                        </div>
+                        <p class="number">2,569</p>
+                        <p class="trend trend-down">
+                            <i class="bi bi-arrow-down"></i> 6.5% moins que l'autre mois
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>Revenus Totaux</h5>
+                            <span class="badge rounded-pill bg-success">
+                                <i class="bi bi-currency-euro"></i>
+                            </span>
+                        </div>
+                        <p class="number">24,300 €</p>
+                        <p class="trend trend-up">
+                            <i class="bi bi-arrow-up"></i> 8.5% Plus de revenus que prévu
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>Visiteurs Aujourd'hui</h5>
+                            <span class="badge rounded-pill bg-info">
+                                <i class="bi bi-people"></i>
+                            </span>
+                        </div>
+                        <p class="number">17,212</p>
+                        <p class="trend trend-up">
+                            <i class="bi bi-arrow-up"></i> 9.2% Share relative thats usual
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between">
+                            <h5>Commandes en Attente</h5>
+                            <span class="badge rounded-pill bg-warning">
+                                <i class="bi bi-bag"></i>
+                            </span>
+                        </div>
+                        <p class="number">43</p>
+                        <p class="trend trend-down">
+                            <i class="bi bi-arrow-down"></i> 4.5% Less orders than usual
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Maps Row -->
+            <div class="row">
+                <!-- Area Chart -->
+                <div class="col-md-8 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-heading">
+                            <h5 class="mb-0">Tendance des Visites</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder">
+                            <div style="width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(37, 97, 207, 0.1), rgba(37, 97, 207, 0.3) 70%); position: relative;">
+                                <!-- Line chart representation -->
+                                <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: #e9ecef;"></div>
+                                <div style="position: absolute; left: 10%; bottom: 40%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 20%; bottom: 60%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 30%; bottom: 45%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 40%; bottom: 65%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 50%; bottom: 55%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 60%; bottom: 75%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 70%; bottom: 60%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 80%; bottom: 70%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                <div style="position: absolute; left: 90%; bottom: 80%; width: 10px; height: 10px; background-color: #2561cf; border-radius: 50%;"></div>
+                                
+                                <!-- Connect points with curve -->
+                                <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0;">
+                                    <path d="M 10% 60% Q 15% 40% 20% 40% T 30% 55% T 40% 35% T 50% 45% T 60% 25% T 70% 40% T 80% 30% T 90% 20%" fill="none" stroke="#2561cf" stroke-width="2" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="col-md-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-heading">
+                            <h5 class="mb-0">Utilisation du Navigateur</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-donut">
+                            <div class="chart-donut-ring"></div>
+                            <div class="donut-segment-1"></div>
+                            <div class="donut-segment-2"></div>
+                            <div class="donut-segment-3"></div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <div style="width: 12px; height: 12px; background-color: #4a89dc; border-radius: 50%; margin-right: 8px;"></div>
+                                    <span>Chrome</span>
+                                </div>
+                                <span>4807</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <div style="width: 12px; height: 12px; background-color: #f8ac59; border-radius: 50%; margin-right: 8px;"></div>
+                                    <span>Firefox</span>
+                                </div>
+                                <span>3605</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div style="width: 12px; height: 12px; background-color: #ff3366; border-radius: 50%; margin-right: 8px;"></div>
+                                    <span>IE</span>
+                                </div>
+                                <span>1589</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Row (Calendar, Map, Projects) -->
+            <div class="row">
+                <!-- Calendar -->
+                <div class="col-md-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-heading">
+                            <h5 class="mb-0">Calendrier</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary ms-1">
+                                    <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="calendar">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <td>Campagne Marketing</td>
+                                        <td>10/05/2025</td>
+                                        <td>15/06/2025</td>
+                                        <td><span class="status-badge status-warning">En attente</span></td>
+                                        <td>Carl Norton</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Intégration API</td>
+                                        <td>15/05/2025</td>
+                                        <td>15/06/2025</td>
+                                        <td><span class="status-badge status-success">Actif</span></td>
+                                        <td>Bertha Marcus</td>
+                                    </tr>
+                                        <th>L</th>
+                                        <th>M</th>
+                                        <th>M</th>
+                                        <th>J</th>
+                                        <th>V</th>
+                                        <th>S</th>
+                                        <th>D</th>
+                                
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-muted">28</td>
+                                        <td class="text-muted">29</td>
+                                        <td class="text-muted">30</td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>6</td>
+                                        <td>7</td>
+                                        <td><div class="current-day">8</div></td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>13</td>
+                                        <td>14</td>
+                                        <td>15</td>
+                                        <td>16</td>
+                                        <td>17</td>
+                                        <td>18</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>20</td>
+                                        <td>21</td>
+                                        <td>22</td>
+                                        <td>23</td>
+                                        <td>24</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>26</td>
+                                        <td>27</td>
+                                        <td>28</td>
+                                        <td>29</td>
+                                        <td>30</td>
+                                        <td class="text-muted">1</td>
+                                        <td class="text-muted">2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="col-md-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-heading">
+                            <h5 class="mb-0">Visiteurs Actuels</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-fullscreen"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="map-container">
+                            <img src="/api/placeholder/600/300" alt="World Map" class="map-image">
+                            <!-- Map markers -->
+                            <div style="position: absolute; top: 35%; left: 20%; width: 12px; height: 12px; background-color: #2561cf; border-radius: 50%; box-shadow: 0 0 0 4px rgba(37, 97, 207, 0.3);"></div>
+                            <div style="position: absolute; top: 25%; left: 50%; width: 12px; height: 12px; background-color: #2561cf; border-radius: 50%; box-shadow: 0 0 0 4px rgba(37, 97, 207, 0.3);"></div>
+                            <div style="position: absolute; top: 60%; left: 65%; width: 12px; height: 12px; background-color: #2561cf; border-radius: 50%; box-shadow: 0 0 0 4px rgba(37, 97, 207, 0.3);"></div>
+                            <div style="position: absolute; top: 65%; left: 30%; width: 12px; height: 12px; background-color: #2561cf; border-radius: 50%; box-shadow: 0 0 0 4px rgba(37, 97, 207, 0.3);"></div>
+                            <div style="position: absolute; top: 15%; left: 85%; width: 12px; height: 12px; background-color: #2561cf; border-radius: 50%; box-shadow: 0 0 0 4px rgba(37, 97, 207, 0.3);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bar Chart -->
+                <div class="col-md-4 mb-4">
+                    <div class="chart-container">
+                        <div class="chart-heading">
+                            <h5 class="mb-0">Ventes Mensuelles</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder" style="height: 215px;">
+                            <div style="width: 100%; height: 80%; display: flex; align-items: flex-end; justify-content: space-around; padding-bottom: 20px;">
+                                <div style="width: 6%; height: 60%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 90%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 40%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 70%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 50%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 80%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 65%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 95%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 75%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                                <div style="width: 6%; height: 85%; background-color: #2561cf; border-radius: 2px 2px 0 0;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+						</div>
+						</div>
+					
+</body>

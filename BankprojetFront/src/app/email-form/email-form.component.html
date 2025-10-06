@@ -1,0 +1,87 @@
+<div class="email-form-container">
+  <h3>Nouveau message</h3>
+  <!-- Main Content -->
+  <div class="content-container">
+    <form [formGroup]="emailForm" (ngSubmit)="onSend()" class="email-form">
+      <!-- Destinataire -->
+      <div class="form-section form-field-reference">
+        <label for="to">À</label>
+        <input 
+          id="to"
+          type="email" 
+          formControlName="to" 
+          placeholder="exemple@domaine.com"
+          required>
+        <div *ngIf="emailForm.controls['to'].hasError('required')" class="error-message">
+          Le champ "À" est obligatoire
+        </div>
+        <div *ngIf="emailForm.controls['to'].hasError('email')" class="error-message">
+          Veuillez entrer une adresse email valide
+        </div>
+      </div>
+
+      <!-- Sujet -->
+      <div class="form-section form-field-reference">
+        <label for="subject">Sujet</label>
+        <input 
+          id="subject"
+          type="text" 
+          formControlName="subject" 
+          placeholder="Sujet du message"
+          required>
+        <div *ngIf="emailForm.controls['subject'].hasError('required')" class="error-message">
+          Le champ "Sujet" est obligatoire
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="form-section form-field-reference">
+        <label for="content">Message</label>
+        <textarea 
+          id="content"
+          formControlName="content" 
+          placeholder="Contenu du message"
+          rows="8"
+          required></textarea>
+        <div *ngIf="emailForm.controls['content'].hasError('required')" class="error-message">
+          Le champ "Message" est obligatoire
+        </div>
+      </div>
+
+      <!-- Pièces jointes -->
+      <div class="form-section">
+        <div class="file-upload-section">
+          <input type="file" id="file-upload" multiple (change)="onFileSelected($event)" style="display: none">
+          <label for="file-upload" class="button-reference button-secondary">
+            <mat-icon>attach_file</mat-icon> Ajouter des pièces jointes
+          </label>
+          <div *ngIf="attachments.length > 0" class="attachments-list">
+            <div *ngFor="let file of attachments" class="attachment-item">
+              <span>{{ file.name }}</span>
+              <button mat-icon-button (click)="removeAttachment(file)" class="remove-attachment">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="button-reference button-cancel"
+          (click)="onClose()">
+          Annuler
+        </button>
+        
+        <button 
+          type="submit" 
+          class="button-reference button-primary"
+          [disabled]="emailForm.invalid">
+          Envoyer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

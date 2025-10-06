@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Professionnel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+       
+</head>
+<app-sidebar></app-sidebar>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <h2>Espace Utilisateur</h2>
+                        <p>Accédez à vos fonctionnalités principales</p>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-section vente" onclick="navigateTo('vente')">
+                            <div class="section-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                             <a href="/ListeFacture" style="text-decoration: none; color: inherit;">
+                            <h3 class="section-title">Vente</h3>
+                            <p class="section-description">Gérer vos ventes, produits et statistiques commerciales</p></a>
+                        </div>
+                        <div class="dashboard-section achat" onclick="navigateTo('achat')">
+                            <div class="section-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <a href="/ListeDepense" style="text-decoration: none; color: inherit;">
+  <h3 class="section-title">Achat</h3>
+  <p class="section-description">Effectuer des achats et gérer vos commandes</p>
+</a>
+                        </div>
+                        <div class="dashboard-section profile" onclick="navigateTo('ListeDepense')">
+                            <div class="section-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <h3 class="section-title">Profil</h3>
+                            <p class="section-description">Paramètres du compte et informations personnelles</p>
+                        </div>
+                        <div class="dashboard-section document" onclick="navigateTo('document')">
+                            <div class="section-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <h3 class="section-title">Documents</h3>
+                            <p class="section-description">Accéder à vos documents et rapports</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function navigateTo(section) {
+            const clickedSection = event.currentTarget;
+            
+            // Effet visuel de clic
+            clickedSection.style.transform = 'scale(0.98)';
+            clickedSection.style.transition = 'transform 0.1s ease';
+            
+            setTimeout(() => {
+                clickedSection.style.transform = '';
+                
+                // Navigation - remplacez par vos vraies URLs
+                switch(section) {
+                    case 'vente':
+                        window.location.href = '/vente';
+                        break;
+                    case 'achat':
+                        window.location.href = '/achat';
+                        break;
+                    case 'profile':
+                        window.location.href = '/profile';
+                        break;
+                    case 'document':
+                        window.location.href = '/documents';
+                        break;
+                }
+            }, 100);
+        }
+
+        // Effet de focus pour l'accessibilité
+        document.querySelectorAll('.dashboard-section').forEach(section => {
+            section.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+            
+            // Rendre les sections focusables
+            section.setAttribute('tabindex', '0');
+            section.setAttribute('role', 'button');
+        });
+    </script>
+
+</html>

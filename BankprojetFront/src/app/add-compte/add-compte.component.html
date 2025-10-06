@@ -1,0 +1,37 @@
+<div class="modal show">
+  <div class="modal-backdrop"></div>
+  
+  <div class="modal-container">
+   <h2 style="color: rgba(11, 46, 101, 0.823);margin-left: 270px;margin-top:10px">Ajouter compte </h2>
+    
+    <form [formGroup]="internForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="numeroCompte"style="color: rgba(11, 46, 101, 0.823);" >Numéro Compte</label>
+        <input type="text" id="numeroCompte" formControlName="numeroCompte" placeholder="Entrez le numero de compte">
+        <div *ngIf="internForm.get('numeroCompte')?.invalid && internForm.get('numeroCompte')?.touched" class="error-message">
+          Le numero de compte est requis
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nomBanque" style="color: rgba(11, 46, 101, 0.823);">Nom Banque</label>
+        <input type="nomBanque" id="nomBanque" formControlName="nomBanque" placeholder="Entrez le nom de la banque">
+        <div *ngIf="internForm.get('nomBanque')?.invalid && internForm.get('nomBanque')?.touched" class="error-message">
+          Veuillez entrer le nom de la banque
+        </div>
+      </div>
+      
+     
+
+     <div class="col-md-12" style="margin-top: 20px; margin-left: 270px;">
+    <button type="submit" class="btn btn-success btn-send me-2">
+  <i class="bi bi-check-circle me-1"></i> Confirmer
+</button>
+
+<button type="button" class="btn btn-secondary btn-send" (click)="close()">
+  <i class="bi bi-x-circle me-1"></i> Annuler
+</button>
+</div>
+    </form>
+  </div>
+</div>

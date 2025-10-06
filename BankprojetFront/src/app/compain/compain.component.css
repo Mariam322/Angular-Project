@@ -1,0 +1,147 @@
+    /*  Helper Styles */
+    body {
+        font-family: Varela Round;
+        background: #f1f1f1;
+    }
+  
+    a {
+        text-decoration: none;
+    }
+  
+    /* Card Styles */
+  
+    .card-sl {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+  
+    .card-image img {
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 8px 8px 0px 0;
+    }
+  
+    .card-action {
+        position: relative;
+        float: right;
+        margin-top: -25px;
+        margin-right: 20px;
+        z-index: 2;
+        color: #E26D5C;
+        background: #fff;
+        border-radius: 100%;
+        padding: 15px;
+        font-size: 15px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    }
+  
+    .card-action:hover {
+        color: #fff;
+        background: #E26D5C;
+        -webkit-animation: pulse 1.5s infinite;
+    }
+  
+    .card-heading {
+        font-size: 18px;
+        font-weight: bold;
+        background: #fff;
+        padding: 10px 15px;
+    }
+  
+    .card-text {
+        padding: 10px 15px;
+        background: #fff;
+        font-size: 14px;
+        color: #636262;
+    }
+  
+    .card-button {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        width: 100%;
+        background-color: #1F487E;
+        color: #fff;
+        border-radius: 0 0 8px 8px;
+    }
+  
+    .card-button:hover {
+        text-decoration: none;
+        background-color: #1D3461;
+        color: #fff;
+  
+    }
+  /* Ensure no extra space around the images in portfolio */
+  .portfolio-wrap figure {
+      margin: 0;
+      padding: 0;
+  }
+  
+  .portfolio-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+  }
+  .hello {
+      margin-top: 20px; /* Ajustez la valeur selon vos besoins */
+      background-color: #b82626;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 600px;
+  }
+  .portfolio-wrap {
+      margin-bottom: 0; /* Remove bottom margin if there's any */
+  }
+  
+  /* Optional: if there's padding inside portfolio-wrap, remove it */
+  .portfolio-wrap {
+      padding: 0;
+  }
+  
+    @-webkit-keyframes pulse {
+        0% {
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+        }
+  
+        70% {
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
+        }
+  
+        100% {
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+            box-shadow: 0 0 0 0 rgba(36, 111, 180, 0);
+        }
+    }
+    .btn{
+      
+      background-color:#18d36e;
+    }
+    .txt{
+      font-size:10px;
+    }
+    i{
+      font-size:10px;
+    }
+    .hola{
+      width: 2000px;
+    }
+    .fa-calendar {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+    
+    .fa-money-bill-wave {
+        font-size:20px;
+        margin-right: 10px;
+    }
+    

@@ -1,0 +1,303 @@
+ :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar-brand {
+            color: rgb(181, 113, 113) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(31, 38, 135, 0.5);
+        }
+
+        .btn-primary {
+            background-color:forestgreen;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-success {
+            background:green;
+            border: none;
+            border-radius: 50px;
+        }
+
+        .btn-danger {
+            background: rgb(203, 33, 33);
+            border: none;
+            border-radius: 50px;
+        }
+
+        .table {
+            background: rgb(135, 16, 16);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(240, 240, 240, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+        }
+
+        .modal-header {
+            background: var(--primary-gradient);
+            color: rgb(150, 120, 120);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgb(141, 118, 118);
+        }
+
+        .invoice-preview {
+            background: rgb(248, 180, 180);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .facture-title {
+  color: #d32f2f;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.devis-title {
+  color: #1976d2;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-outline-primary {
+  border: 1px solid #007bff;
+  color: #007bff;
+  background-color: transparent;
+}
+
+.form-array-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 0.8rem;
+}
+
+.card {
+  margin: 20px 0;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            .invoice-preview, .invoice-preview * { visibility: visible; }
+            .invoice-preview { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+        /* Styles pour la fenêtre modale */
+
+  
+  .modal.show {
+    display: block; /* Affiche le modal quand il est activé */
+  }
+  
+  /* Container pour la modal */
+ .modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Désactive tout défilement externe */
+}
+  
+  /* Style du conteneur du modal */
+ .container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 90%; /* Plus responsive */
+  max-width: 700px; /* Largeur maximale */
+  max-height: 90vh; /* Hauteur maximale de 90% de la vue */
+  overflow-y: auto; /* Défilement interne si nécessaire */
+  margin: 20px 0; /* Marge pour éviter de coller aux bords */
+}
+/* Désactive le défilement du body quand le modal est ouvert */
+body.modal-open {
+  overflow: hidden;
+}
+  /* Contenu du modal */
+  /* Contenu du modal */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+  /* Styles pour le formulaire et les champs */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .mat-raised-button {
+    margin-right: 8px;
+  }
+  
+  .mat-raised-button:last-child {
+    margin-right: 0;
+  }
+  
+  input, textarea, button {
+    padding: 8px 15px;
+    border-radius: 5px !important;
+    margin: 5px 0px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-size: 18px !important;
+    font-weight: 300;
+  }
+  
+  /* Media queries pour écrans petits */
+  @media (max-width: 700px) {
+    .container {
+      width: 70%; /* Ajuste encore plus pour les petits écrans */
+      max-width: 600px; /* Limite la largeur maximale */
+      max-height: 90%; /* Augmente légèrement la hauteur max */
+    }
+    .container .text {
+      font-size: 30px;
+    }
+    .container form {
+      padding: 10px 0 0 0;
+    }
+    .container form .form-row {
+      display: block;
+    }
+    form .form-row .input-data {
+      margin: 35px 0!important;
+    }
+  }
+  

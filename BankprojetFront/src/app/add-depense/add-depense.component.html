@@ -1,0 +1,139 @@
+<div class="modal-backdrop">
+  <div class="container">
+    <div class="text depense-title">
+      Modifier Dépense
+    </div>
+
+    <!-- Formulaire principal -->
+    <form [formGroup]="depenseForm" (ngSubmit)="onSubmit()">
+      <!-- Sélection de campagne -->
+      <div class="form-group">
+        <label>Campagne associée *</label>
+        <select class="form-control" formControlName="campaignId" (change)="onCampaignSelect($event)">
+          <option value="">Sélectionner une campagne</option>
+          <option *ngFor="let campaign of filteredCampaigns" [value]="campaign.id">
+            {{ campaign.nom }} ({{ campaign.reference }})
+          </option>
+        </select>
+      </div>
+
+      <!-- Informations fournisseur -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Nom du fournisseur *</label>
+          <input type="text" class="form-control" formControlName="fournisseurName" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Email *</label>
+          <input type="email" class="form-control" formControlName="fournisseurEmail" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Adresse *</label>
+          <input type="text" class="form-control" formControlName="fournisseurAddress" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Téléphone</label>
+          <input type="text" class="form-control" formControlName="fournisseurPhone">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Type de fournisseur *</label>
+          <select class="form-control" formControlName="fournisseurType" required>
+            <option [value]="TypeClientFournisseurEnum.FOURNISSEUR">Fournisseur</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Date dépense *</label>
+          <input type="date" class="form-control" formControlName="dateDepense" required>
+        </div>
+      </div>
+
+      <!-- Dates spécifiques -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Date de paiement *</label>
+          <input type="date" class="form-control" formControlName="datePaiementDepense" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Date de réception *</label>
+          <input type="date" class="form-control" formControlName="dateReceptionDepense" required>
+        </div>
+      </div>
+
+      <!-- Articles -->
+      <h5>Lignes de dépense</h5>
+      <div formArrayName="lignes">
+        <div *ngFor="let ligne of lignes.controls; let i = index" [formGroupName]="i" class="row mb-2 align-items-center">
+          <div class="form-group col-md-4">
+            <input type="text" class="form-control" formControlName="description" placeholder="Description" required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="number" class="form-control" formControlName="quantite" min="1" 
+                   (change)="calculateLineTotal(i)" placeholder="Quantité" required>
+          </div>
+          <div class="form-group col-md-3">
+            <input type="number" class="form-control" formControlName="prix" step="0.01" min="0" 
+                   (change)="calculateLineTotal(i)" placeholder="Prix unitaire" required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" formControlName="total" placeholder="Total" readonly>
+          </div>
+          <div class="form-group col-md-1">
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeLigne(i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-outline-primary mb-3" (click)="addLigne()">
+        <i class="fas fa-plus me-1"></i> Ajouter une ligne
+      </button>
+
+      <!-- TVA -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>TVA (%) *</label>
+          <input type="number" class="form-control" formControlName="tvaDepense" min="0" max="100" required>
+        </div>
+      </div>
+
+      <!-- Totaux -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Total HT:</span>
+            <strong>{{ calculateMontantHT() | currency:'TND':'symbol':'1.3-3'}}</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>TVA ({{ depenseForm.get('tvaDepense')?.value || 0 }}%):</span>
+            <strong>{{ calculateMontantTTC() - calculateMontantHT() | currency:'TND':'symbol':'1.3-3'}}</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Total TTC:</span>
+            <strong>{{ calculateMontantTTC() | currency:'TND':'symbol':'1.3-3'}}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea class="form-control" formControlName="notes" rows="3"></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success" >
+          Enregistrer la dépense
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="close()">Fermer</button>
+      </div>
+    </form>
+  </div>
+</div>

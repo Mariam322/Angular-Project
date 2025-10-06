@@ -1,0 +1,80 @@
+<div class="email-detail-page" *ngIf="!isLoading && !error && email">
+  <header class="email-detail-header">
+    <button mat-icon-button (click)="goBack()" class="back-button" aria-label="Retour à la liste des emails">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="email-subject">{{ email.headers?.subject || 'Pas de sujet' }}</h1>
+    <div class="email-actions">
+      <button mat-icon-button (click)="onReply()" aria-label="Répondre" matTooltip="Répondre">
+        <mat-icon>reply</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onForward()" aria-label="Transférer" matTooltip="Transférer">
+        <mat-icon>forward</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="onDelete()" aria-label="Supprimer cet email" matTooltip="Supprimer">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <mat-divider></mat-divider>
+
+  <div class="email-meta-container">
+    <div class="email-meta-row">
+      <strong class="meta-label">De :</strong>
+      <span class="meta-value">{{ getSender() }}</span>
+    </div>
+    <div class="email-meta-row">
+      <strong class="meta-label">À :</strong>
+      <span class="meta-value">{{ getRecipients() }}</span>
+    </div>
+    <div class="email-meta-row" *ngIf="getCc()">
+      <strong class="meta-label">Cc :</strong>
+      <span class="meta-value">{{ getCc() }}</span>
+    </div>
+    <div class="email-meta-row">
+      <strong class="meta-label">Date :</strong>
+      <span class="meta-value">{{ email.headers?.date | date:'dd/MM/yyyy HH:mm':'':'fr' }}</span>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="email-body-container">
+    <div [innerHTML]="emailHtmlBody" class="email-body-content"></div>
+  </div>
+
+  <div *ngIf="email.attachments && email.attachments.length > 0" class="email-attachments-container">
+    <mat-divider></mat-divider>
+    <h3>Pièces jointes ({{ email.attachments.length }})</h3>
+    <ul class="attachments-list">
+      <li *ngFor="let attachment of email.attachments" class="attachment-item">
+        <mat-icon class="attachment-icon">attach_file</mat-icon>
+        <span class="attachment-filename">{{ attachment.filename }}</span>
+        <span class="attachment-size" *ngIf="attachment.size">({{ attachment.size | number }} bytes)</span>
+        <!-- Vous pouvez ajouter un bouton de téléchargement ici si votre backend le gère -->
+        <!-- <button mat-icon-button (click)="downloadAttachment(attachment)" aria-label="Télécharger la pièce jointe">
+          <mat-icon>download</mat-icon>
+        </button> -->
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-spinner-detail">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>Chargement de l'email...</p>
+</div>
+
+<div *ngIf="!isLoading && error" class="error-message-detail">
+  <mat-icon color="warn">error_outline</mat-icon>
+  <p>{{ error }}</p>
+  <button mat-stroked-button color="primary" (click)="goBack()">Retour</button>
+  <button mat-stroked-button color="accent" *ngIf="emailId && !email && !emailDataInput" >Réessayer</button>
+</div>
+
+<div *ngIf="!isLoading && !email && !error" class="no-email-selected">
+    <mat-icon>email</mat-icon>
+    <p>Aucun email sélectionné ou détails non disponibles.</p>
+    <button mat-stroked-button color="primary" (click)="goBack()">Retour à la boîte de réception</button>
+</div>

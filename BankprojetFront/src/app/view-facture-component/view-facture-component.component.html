@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="modal-backdrop">
+        <div #invoiceContent class="invoice-container container" style="width: 210mm; min-height: 177mm; padding: 15mm; font-family: Arial; box-sizing: border-box;">
+            <div class="text">Facture</div>
+            
+            <div class="invoice-content">
+                <div class="invoice-header">
+                    <div class="company-info">
+                        <div class="logo">
+                           <img src="../../assets/images/unnamed.png" alt="Logo" style="height: 40px;" />
+                        </div>
+                        <div class="company-details">
+                            <strong>Systeo Digital</strong><br>
+                            Tunis,Sfax<br>
+                            Route manzel chaker km 3<br>
+                            {{email}}<br>
+                            Tel: +216 50 856 616
+                        </div>
+                    </div>
+                 </div>
+                 <div class="inv">
+                    <div class="client-info">
+                        <div class="client-details">
+                            <strong>DESTINATAIRE</strong><br>
+                            <span id="clientName">{{data.facture.nom}}</span><br>
+                            <span id="clientEmail">{{data.facture.email}}</span><br>
+                            <span id="clientAddress">{{data.facture.pays}}-{{data.facture.ville}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-container">
+                    <span class="status-badge" id="statusBadge">{{ getStatusLabel(data.facture.statut) }}</span>
+                </div>
+
+                <div class="invoice-meta">
+                    <div class="meta-section">
+                        <div class="invoice-number">
+                            <div>FACTURE N°</div>
+                            <div class="number" id="invoiceNumber">{{data.facture.numeroFacture}}</div>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">DATE:</span>
+                            <span class="meta-value" id="invoiceDate">{{formatDate(data.facture.dateFacture)}}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">DATE PAIEMENT:</span>
+                            <span class="meta-value" id="paymentDate">{{formatDate(data.facture.datePaiement)}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="meta-section">
+                        <h3>Montants</h3>
+                        <div class="meta-item">
+                            <span class="meta-label">HT:</span>
+                            <span class="meta-value">{{formatCurrency(data.facture.montantHt || 0)}}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TVA:</span>
+                            <span class="meta-value">{{data.facture.tva}}%</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">TTC:</span>
+                            <span class="meta-value">{{formatCurrency(data.facture.montantTtc || 0)}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="invoice-table-section">
+                    <div class="table-header">Lignes de Facture</div>
+                    <table class="invoice-table">
+                        <thead>
+                            <tr>
+                                <th class="description-col">Description</th>
+                                <th class="quantity-col">Quantité</th>
+                                <th class="price-col">Prix unitaire</th>
+                                <th class="total-col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceLines">
+                            <tr *ngFor="let ligne of data.facture.lignes">
+                                <td class="description-col">{{ligne.description}}</td>
+                                <td class="quantity-col">{{ligne.quantite}}</td>
+                                <td class="price-col">{{formatCurrency(ligne.prixUnitaire)}}</td>
+                                <td class="total-col">{{formatCurrency(ligne.quantite * ligne.prixUnitaire)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="totals-section">
+                    <div class="totals-grid">
+                        <div class="payment-info">
+                            <h4>Informations Supplémentaires</h4>
+                            <div class="payment-details">
+                                  <div class="total-row">
+     <span class="info-label">Conditions de paiement:</span>
+                            <span class="info-value">30 jours net</span></div>
+                                <p *ngIf="data.facture.remise"><strong>Remise:</strong> {{data.facture.remise}}%</p>
+                                <div class="total-row">
+                                        <span class="info-label">Type:</span>
+                                        <span class="info-value"> {{data.facture.typePieceCommerciale}}</span></div>
+                                <p><strong>Conditions générales de vente consultables sur le site : www.systeo.biz</strong> {{data.facture.idCompaign}}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="totals-card">
+                            <div class="total-row">
+                                <span class="total-label">Sous-total:</span>
+                                <span class="total-value">{{formatCurrency(data.facture.montantHt || 0)}}</span>
+                            </div>
+                            <div class="total-row">
+                                <span class="total-label">TVA ({{data.facture.tva}}%):</span>
+                                <span class="total-value">{{formatCurrency((data.facture.montantHt || 0) * (data.facture.tva / 100))}}</span>
+                            </div>
+                            <div class="total-row grand-total">
+                                <span class="total-label">TOTAL TTC:</span>
+                                <span class="total-value">{{formatCurrency(data.facture.montantTtc || 0)}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-success" (click)="generateSavePdf()">
+                    <i class="fas fa-save"></i> Enregistrer PDF
+                </button>
+                <button class="btn btn-primary" (click)="downloadPdf()">
+                    <i class="fas fa-download"></i> Télécharger PDF
+                </button>
+                <button class="btn btn-info" (click)="printInvoice()">
+                    <i class="fas fa-print"></i> Imprimer
+                </button>
+                <button class="btn btn-secondary" (click)="closeDialog()">
+                    <i class="fas fa-times"></i> Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

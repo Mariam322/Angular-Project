@@ -1,0 +1,163 @@
+<div class="modal-backdrop">
+  <div class="container">
+   <div class="text" style="text-align: center; font-size: 41px; font-family: 'Times New Roman', Times, serif;">
+      {{ isEditMode ? 'Modifier compagnie' : 'Ajouter compagnie' }}
+    </div>
+    <form [formGroup]="internForm" (ngSubmit)="onSubmit()">
+      <div class="controls">
+        <!-- Reference -->
+        <div class="form-group">
+          <label for="form_reference">Reference *</label>
+          <input
+            id="form_reference"
+            type="text"
+            formControlName="reference"
+            class="form-control"
+            placeholder="Enter reference"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('reference')?.invalid" class="text-danger">
+            Reference is required.
+          </div>
+        </div>
+
+        <!-- Nom -->
+        <div class="form-group">
+          <label for="form_nom">Nom *</label>
+          <input
+            id="form_nom"
+            type="text"
+            formControlName="nom"
+            class="form-control"
+            placeholder="Enter name"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('nom')?.invalid" class="text-danger">
+            Name is required.
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="form_address">Addresse *</label>
+          <input
+            id="form_address"
+            type="text"
+            formControlName="address"
+            class="form-control"
+            placeholder="Enter address"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('address')?.invalid" class="text-danger">
+            Address is required.
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="form_email">Email *</label>
+          <input
+            id="form_email"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter email"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('email')?.invalid" class="text-danger">
+            <div *ngIf="internForm.get('email')?.errors?.['required']">Email is required.</div>
+            <div *ngIf="internForm.get('email')?.errors?.['email']">Please enter a valid email.</div>
+          </div>
+        </div>
+
+        <!-- Telephone -->
+        <div class="form-group">
+          <label for="form_telephone">Telephone *</label>
+          <input
+            id="form_telephone"
+            type="text"
+            formControlName="telephone"
+            class="form-control"
+            placeholder="Enter telephone"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('telephone')?.invalid" class="text-danger">
+            Telephone is required.
+          </div>
+        </div>
+
+        <!-- Pays -->
+        <div class="form-group">
+          <label for="form_pays">Pays *</label>
+          <input
+            id="form_pays"
+            type="text"
+            formControlName="pays"
+            class="form-control"
+            placeholder="Enter country"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('pays')?.invalid" class="text-danger">
+            Country is required.
+          </div>
+        </div>
+
+        <!-- Ville -->
+        <div class="form-group">
+          <label for="form_ville">Ville *</label>
+          <input
+            id="form_ville"
+            type="text"
+            formControlName="ville"
+            class="form-control"
+            placeholder="Enter city"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('ville')?.invalid" class="text-danger">
+            City is required.
+          </div>
+        </div>
+
+        <!-- Type -->
+        <div class="form-group">
+          <label for="form_type">Type *</label>
+          <select
+            id="form_type"
+            formControlName="type"
+            class="form-control"
+            required="required"
+          >
+            <option value="">Select type</option>
+            <option *ngFor="let type of typeClientFournisseurValues" [value]="type">
+              {{ type }}
+            </option>
+          </select>
+          <div *ngIf="formSubmitted && internForm.get('type')?.invalid" class="text-danger">
+            Type is required.
+          </div>
+        </div>
+
+        <!-- Date de création -->
+        <div class="form-group">
+          <label for="form_createdAt">Creation Date *</label>
+          <input
+            id="form_createdAt"
+            type="date"
+            formControlName="createdAt"
+            class="form-control"
+            required="required"
+          />
+          <div *ngIf="formSubmitted && internForm.get('createdAt')?.invalid" class="text-danger">
+            Creation date is required.
+          </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="col-md-12" style="margin-top: 20px; text-align: center;">
+          <input type="submit" class="btn btn-success btn-send" value="Confirm" />
+          <input type="button" class="btn btn-secondary btn-send" value="Close" (click)="close()" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

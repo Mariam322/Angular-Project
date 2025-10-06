@@ -1,0 +1,128 @@
+<p>updatefactre works!</p>
+<div class="modal-backdrop">
+  <div class="container">
+    <!-- Titre spécifique à la modification -->
+    <div class="text facture-title">
+      Modification de Facture
+    </div>
+
+    <!-- Formulaire principal -->
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <!-- Informations client (désactivées car non modifiables) -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Nom du client *</label>
+          <input type="text" class="form-control" formControlName="clientName" readonly>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Email *</label>
+          <input type="email" class="form-control" formControlName="clientEmail" readonly>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Adresse *</label>
+          <input type="text" class="form-control" formControlName="clientAddress" readonly>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Téléphone</label>
+          <input type="text" class="form-control" formControlName="clientPhone" readonly>
+        </div>
+      </div>
+
+      <!-- Dates modifiables -->
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Date de facture *</label>
+          <input type="date" class="form-control" formControlName="documentDate" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Date d'échéance *</label>
+          <input type="date" class="form-control" formControlName="dueDate" required>
+        </div>
+      </div>
+
+      <!-- Articles modifiables -->
+      <h5>Articles</h5>
+      <div formArrayName="items">
+        <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="row mb-2 align-items-center">
+          <div class="form-group col-md-4">
+            <input type="text" class="form-control" formControlName="description" placeholder="Description" required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="number" class="form-control" formControlName="quantity" min="1" 
+                   (change)="calculateLineTotal(i)" placeholder="Quantité" required>
+          </div>
+          <div class="form-group col-md-3">
+            <input type="number" class="form-control" formControlName="unitPrice" step="0.01" min="0" 
+                   (change)="calculateLineTotal(i)" placeholder="Prix unitaire" required>
+          </div>
+          <div class="form-group col-md-2">
+            <input type="text" class="form-control" formControlName="total" placeholder="Total" readonly>
+          </div>
+          <div class="form-group col-md-1">
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(i)" [disabled]="items.controls.length <= 1">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-outline-primary mb-3" (click)="addItem()">
+        <i class="fas fa-plus me-1"></i> Ajouter un article
+      </button>
+
+      <!-- Paramètres financiers -->
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label>TVA (%) *</label>
+          <input type="number" class="form-control" formControlName="tva" min="0" max="100" required>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Remise</label>
+          <input type="number" class="form-control" formControlName="discount" min="0" step="0.01">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Statut *</label>
+          <select class="form-control" formControlName="status" required>
+            <option *ngFor="let status of getStatusOptions()" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Totaux -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Total HT:</span>
+            <strong>{{ calculateMontantHT() | currency:'TND':'symbol':'1.3-3' }}</strong>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>TVA ({{ editForm.get('tva')?.value || 0 }}%):</span>
+            <strong>{{ calculateTVA() | currency:'TND':'symbol':'1.3-3' }}</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Total TTC:</span>
+            <strong>{{ calculateMontantTTC() | currency:'TND':'symbol':'1.3-3' }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes modifiables -->
+      <div class="form-group">
+        <label>Notes</label>
+        <textarea class="form-control" formControlName="notes" rows="3"></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success" [disabled]="isSaving">
+          <span *ngIf="!isSaving">Mettre à jour la facture</span>
+          <span *ngIf="isSaving">Enregistrement...</span>
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="close()">Fermer</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+ body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            border: 1px solid #e9ecef;
+            margin-top: -570px;
+            margin-left: 250px;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #587694 0%, #7191b1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .dashboard-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-header p {
+            margin: 8px 0 0 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+        }
+
+        .dashboard-section {
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            background: white;
+            position: relative;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-section:hover {
+            background-color: #f8f9fa;
+        }
+
+        .dashboard-section:active {
+            transform: translateY(1px);
+        }
+
+        /* Bordures subtiles */
+        .dashboard-section:nth-child(1) {
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .dashboard-section:nth-child(2) {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .dashboard-section:nth-child(3) {
+            border-right: 1px solid #dee2e6;
+        }
+
+        .section-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: all 0.2s ease;
+        }
+
+        .section-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .section-description {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 0;
+            max-width: 280px;
+        }
+
+        /* Couleurs professionnelles pour chaque section */
+        .vente .section-icon {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .vente:hover .section-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .achat .section-icon {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        }
+
+        .achat:hover .section-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .profile .section-icon {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+
+        .profile:hover .section-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .document .section-icon {
+            background: linear-gradient(135deg, #fd7e14 0%, #e55100 100%);
+        }
+
+        .document:hover .section-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253, 126, 20, 0.3);
+        }
+
+        /* Indicateur de clic */
+        .dashboard-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid #dee2e6;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .dashboard-section:hover::after {
+            border-left-color: #6c757d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-section {
+                padding: 35px 25px;
+                min-height: 150px;
+            }
+            
+            .dashboard-section:nth-child(1),
+            .dashboard-section:nth-child(2),
+            .dashboard-section:nth-child(3) {
+                border-right: none;
+                border-bottom: 1px solid #dee2e6;
+            }
+
+            .dashboard-section:nth-child(4) {
+                border-bottom: none;
+            }
+            
+            .section-icon {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 16px;
+            }
+            
+            .section-icon i {
+                font-size: 1.75rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animation de chargement */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-section {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .dashboard-section:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-section:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-section:nth-child(3) { animation-delay: 0.3s; }
+        .dashboard-section:nth-child(4) { animation-delay: 0.4s; }
+  

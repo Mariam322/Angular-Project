@@ -1,0 +1,360 @@
+/* Variables de couleurs (valeurs littérales) */
+/*
+$primary-color: #41B3A3;
+$accent-color: #E27D60;
+$warn-color: #F44336;
+$success-color: #4CAF50;
+$cancel-color: #6c757d;
+$pending-color: #f9a825;
+
+$text-color-primary: #333;
+$text-color-secondary: #666;
+$text-color-light: #fff;
+
+$background-color: #f7f9fc;
+$container-background: #fff;
+$border-color: #e0e0e0;
+$border-radius: 8px;
+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+*/
+
+/* --- Styles Généraux du Dashboard --- */
+.dashboard-container {
+  font-family: 'Poppins', sans-serif;
+  padding: 24px;
+  background-color: #f7f9fc; /* $background-color */
+  color: #333; /* $text-color-primary */
+}
+
+/* --- En-tête commun pour les sections --- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  margin-top: 1rem;
+}
+
+.section-header h2 {
+  padding-top: 1rem;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #333; /* $text-color-primary */
+}
+
+.section-header button {
+  padding-top: 1rem;
+  cursor: pointer;
+  background: #41B3A3; /* $primary-color */
+  border-radius: 8px; /* $border-radius */
+  font-weight: 600;
+  min-height: 40px;
+  border: none;
+  color: white;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-header button mat-icon {
+  margin-right: 8px;
+}
+
+/* --- Grille pour les cartes de statistiques --- */
+.stats-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* --- Style des cartes de statistiques --- */
+.stat-card {
+  background-color: #fff; /* $container-background */
+  border-radius: 8px; /* $border-radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* $card-shadow */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  padding: 0 !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .mat-card-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.stat-card .stat-icon-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.stat-card .stat-icon-container mat-icon {
+  font-size: 22px;
+  color: #fff; /* $text-color-light */
+}
+
+/* Couleurs spécifiques par carte */
+.stat-card.pending .stat-icon-container { background-color: #f9a825; } /* $pending-color */
+.stat-card.in-progress .stat-icon-container { background-color: #41B3A3; } /* $primary-color */
+.stat-card.completed .stat-icon-container { background-color: #4CAF50; } /* $success-color */
+
+.stat-card .mat-card-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 2px 0;
+}
+
+.stat-card .mat-card-subtitle {
+  font-size: 13px;
+  color: #666; /* $text-color-secondary */
+  font-weight: 500;
+  margin: 0;
+}
+
+/* --- Style commun pour les cartes de section --- */
+.section-card {
+  background-color: #fff; /* $container-background */
+  border-radius: 8px; /* $border-radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* $card-shadow */
+  margin-bottom: 30px;
+  padding: 0 !important;
+}
+
+.section-card > .mat-card-header,
+.section-card > .section-header {
+  padding: 16px 24px 0 24px;
+}
+.section-card > .mat-card-content {
+  padding: 16px 24px 24px 24px;
+}
+.section-card.project-list-section > .mat-card-content,
+.section-card.user-list-section > .mat-card-content {
+  padding: 0 0 16px 0;
+}
+
+/* --- Section Activité --- */
+.activity-section .mat-card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.activity-section .mat-card-subtitle {
+  font-size: 13px;
+  color: #666; /* $text-color-secondary */
+  margin-bottom: 10px;
+}
+
+.activity-section .activity-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 5px;
+}
+
+.activity-section .chart-container {
+  flex: 2;
+  min-width: 300px;
+}
+.activity-section .chart-container canvas { max-width: 100%; height: auto; }
+
+.activity-section .activity-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 180px;
+}
+
+.activity-section .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background-color: #f7f9fc; /* $background-color */
+  border-radius: 6px;
+}
+
+.activity-section .stat-item mat-icon {
+  color: #41B3A3; /* $primary-color */
+  font-size: 22px;
+}
+
+.activity-section .stat-item .stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.activity-section .stat-item .stat-label {
+  font-size: 12px;
+  color: #666; /* $text-color-secondary */
+}
+
+/* --- Styles pour les tables de données --- */
+.data-table {
+  width: 100%;
+  box-shadow: none;
+}
+
+.data-table th.mat-header-cell {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666; /* $text-color-secondary */
+  background-color: transparent;
+  border-bottom: 2px solid #e0e0e0; /* $border-color */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+.data-table td.mat-cell {
+  padding: 14px 24px;
+  border-bottom: 1px solid #e0e0e0; /* $border-color */
+  font-size: 14px;
+  color: #333; /* $text-color-primary */
+  text-align: center;
+  vertical-align: middle;
+}
+
+.data-table tr.mat-row:last-child td.mat-cell { border-bottom: none; }
+
+/* --- Badges (Rôle et Statut) --- */
+.data-table .role-badge,
+.data-table .status-badge {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  line-height: 1.4;
+  border: 1px solid transparent;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Couleurs spécifiques RÔLES */
+.data-table .role-badge.super_admin { background-color: #fde7e7; color: #c62828; border-color: #f5c1c1;}
+.data-table .role-badge.admin { background-color: #e3f2fd; color: #1565c0; border-color: #b4dcfc;}
+.data-table .role-badge.user { background-color: #e8f5e9; color: #2e7d32; border-color: #c8e6c9;}
+.data-table .role-badge.error { background-color: #fff3e0; color: #ef6c00; border-color: #ffe0b2;}
+
+/* Couleurs spécifiques STATUTS */
+.data-table .status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.data-table .status-badge i { font-size: 1.1em; }
+
+/* Statuts Utilisateur */
+.data-table .status-badge.status-enabled { background-color: rgba(76, 175, 80, 0.15); color: #3e8e41; } /* darken($success-color, 10%) */
+.data-table .status-badge.status-disabled { background-color: rgba(244, 67, 54, 0.1); color: #d32f2f; } /* darken($warn-color, 10%) */
+
+/* Statuts Projet */
+.data-table .status-badge.status-pending { background-color: rgba(249, 168, 37, 0.15); color: #e09721; } /* darken($pending-color, 10%) */
+.data-table .status-badge.status-in-progress { background-color: rgba(65, 179, 163, 0.15); color: #3aa092; } /* darken($primary-color, 10%) */
+.data-table .status-badge.status-completed { background-color: rgba(76, 175, 80, 0.15); color: #3e8e41; } /* darken($success-color, 10%) */
+
+/* Cellule Progression */
+.data-table .progress-cell .mat-progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  margin: 0 auto 4px auto;
+}
+.data-table .progress-cell .progress-value {
+  font-size: 11px;
+  color: #666; /* $text-color-secondary */
+  display: block;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Cellule Actions */
+.data-table td.actions-cell {
+  white-space: nowrap;
+  text-align: right;
+  width: 1%;
+}
+
+.data-table td.actions-cell button {
+  border: none; background: none; cursor: pointer;
+  font-size: 1.2rem; padding: 6px; border-radius: 50%;
+  width: 34px; height: 34px; display: inline-flex;
+  align-items: center; justify-content: center;
+  margin-left: 5px; transition: all 0.2s ease;
+  vertical-align: middle;
+}
+
+.data-table td.actions-cell button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Couleurs spécifiques boutons d'action */
+.data-table td.actions-cell button.edit-btn { color: #41B3A3; } /* $primary-color */
+.data-table td.actions-cell button.edit-btn:hover:not(:disabled) { background-color: rgba(65, 179, 163, 0.1); } /* rgba($primary-color, 0.1) */
+.data-table td.actions-cell button.delete-btn { color: #F44336; } /* $warn-color */
+.data-table td.actions-cell button.delete-btn:hover:not(:disabled) { background-color: rgba(244, 67, 54, 0.1); } /* rgba($warn-color, 0.1) */
+.data-table td.actions-cell button.save-btn { color: #4CAF50; } /* $success-color */
+.data-table td.actions-cell button.save-btn:hover:not(:disabled) { background-color: rgba(76, 175, 80, 0.1); } /* rgba($success-color, 0.1) */
+.data-table td.actions-cell button.cancel-btn { color: #6c757d; } /* $cancel-color */
+.data-table td.actions-cell button.cancel-btn:hover:not(:disabled) { background-color: rgba(108, 117, 125, 0.1); } /* rgba($cancel-color, 0.1) */
+
+.data-table td.actions-cell button .spinner-border { width: 1em; height: 1em; }
+
+/* Padding première/dernière colonne */
+.data-table th.mat-header-cell:first-child,
+.data-table td.mat-cell:first-child {
+  padding-left: 24px;
+  text-align: left;
+}
+.data-table th.mat-header-cell:last-child,
+.data-table td.mat-cell:last-child {
+  padding-right: 24px;
+  text-align: right;
+}
+
+/* Ligne "Aucune donnée" */
+.data-table .mat-row.mat-no-data-row td.mat-cell {
+  text-align: center;
+  color: #666; /* $text-color-secondary */
+  padding: 30px 0;
+  font-style: italic;
+}
+
+/* --- Indicateur de chargement --- */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #666; /* $text-color-secondary */
+}
+
+.loading-indicator p { margin-top: 16px; font-size: 14px; }
+
+/* --- Progress bars Material --- */
+.mat-progress-bar.mat-primary .mat-progress-bar-fill::after { background-color: #41B3A3; } /* $primary-color */
+.mat-progress-bar.mat-accent .mat-progress-bar-fill::after { background-color: #E27D60; } /* $accent-color */
+.mat-progress-bar.mat-warn .mat-progress-bar-fill::after { background-color: #F44336; } /* $warn-color */

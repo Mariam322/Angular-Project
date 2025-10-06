@@ -1,0 +1,236 @@
+/* Variables (peuvent être importées d'un fichier global ou définies ici) */
+:host {
+  display: block;
+  background-color: #fff; /* Fond blanc pour la page de détail elle-même */
+}
+
+.email-detail-page {
+  padding: 24px;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+  background-color: #fff; /* S'assurer que le contenu a un fond blanc */
+}
+
+.email-detail-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px; /* Espace avant le premier divider */
+}
+.email-detail-header .back-button {
+  margin-right: 16px;
+  color: #6c757d;
+}
+.email-detail-header .back-button:hover {
+  color: #007bff;
+}
+.email-detail-header .email-subject {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Empêche le retour à la ligne du sujet */
+  padding-right: 16px; /* Espace pour éviter que le texte ne colle aux actions */
+}
+.email-detail-header .email-actions {
+  display: flex;
+  gap: 8px; /* Espace entre les boutons d'action */
+  flex-shrink: 0; /* Empêche les boutons de rétrécir */
+}
+.email-detail-header .email-actions button {
+  color: #6c757d;
+}
+.email-detail-header .email-actions button:hover {
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+.email-detail-header .email-actions button[color="warn"]:hover {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+mat-divider {
+  margin-bottom: 16px; /* Espace après chaque divider */
+}
+
+.email-meta-container {
+  padding: 8px 0;
+  font-size: 0.95em;
+  color: #333;
+}
+.email-meta-container .email-meta-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-start; /* Pour que les labels longs s'alignent bien */
+}
+.email-meta-container .email-meta-row .meta-label {
+  font-weight: 500;
+  color: #2c3e50;
+  min-width: 70px; /* Alignement des valeurs */
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.email-meta-container .email-meta-row .meta-value {
+  word-break: break-word; /* Permet aux longues chaînes (emails) de passer à la ligne */
+  line-height: 1.4;
+}
+
+.email-body-container {
+  padding: 16px 0;
+  line-height: 1.7;
+  color: #333;
+  font-size: 1em; /* Taille de base pour le corps */
+}
+.email-body-container .email-body-content p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+.email-body-container .email-body-content a {
+  color: #007bff;
+  text-decoration: none;
+}
+.email-body-container .email-body-content a:hover {
+  text-decoration: underline;
+}
+.email-body-container .email-body-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 0.5em 0;
+}
+.email-body-container .email-body-content blockquote {
+  border-left: 4px solid #e0e0e0;
+  padding-left: 16px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #6c757d;
+  font-style: italic;
+  background-color: #f8f9fa;
+  border-radius: 0 4px 4px 0;
+}
+.email-body-container .email-body-content ul,
+.email-body-container .email-body-content ol {
+  padding-left: 24px; /* Indentation standard pour les listes */
+}
+
+.email-attachments-container {
+  padding-top: 16px;
+  margin-top: 16px;
+}
+.email-attachments-container h3 {
+  font-size: 1.2em;
+  color: #2c3e50;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 8px;
+}
+.email-attachments-container .attachments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.email-attachments-container .attachment-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f8f9fa; /* Séparateur très léger */
+}
+.email-attachments-container .attachment-item:last-child {
+  border-bottom: none;
+}
+.email-attachments-container .attachment-item .attachment-icon {
+  margin-right: 10px;
+  color: #007bff;
+}
+.email-attachments-container .attachment-item .attachment-filename {
+  font-weight: 500;
+  color: #333;
+  margin-right: 10px;
+  cursor: default; /* Ou pointer si cliquable pour télécharger */
+}
+.email-attachments-container .attachment-item .attachment-size {
+  font-size: 0.85em;
+  color: #6c757d;
+}
+
+/* États de chargement et d'erreur */
+.loading-spinner-detail,
+.error-message-detail,
+.no-email-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  min-height: 300px;
+  margin: 16px;
+}
+.loading-spinner-detail mat-icon,
+.error-message-detail mat-icon,
+.no-email-selected mat-icon {
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 16px;
+}
+.loading-spinner-detail p,
+.error-message-detail p,
+.no-email-selected p {
+  font-size: 1.15em;
+  color: #6c757d;
+  margin-bottom: 24px;
+}
+
+.error-message-detail {
+  color: #dc3545;
+  border: 1px solid #f1aeb5;
+  background-color: #f8d7da;
+  border-radius: 6px;
+  padding: 24px;
+}
+.error-message-detail mat-icon {
+  color: #dc3545;
+}
+.error-message-detail p {
+  color: #b02a37;
+}
+.error-message-detail button {
+  margin-top: 16px;
+}
+.error-message-detail button:not(:last-child) {
+  margin-right: 8px;
+}
+
+.no-email-selected mat-icon {
+  color: #e0e0e0; /* Icône discrète */
+}
+
+/* Ajustements responsives */
+@media (max-width: 768px) {
+  .email-detail-page {
+    margin: 8px;
+    padding: 16px;
+  }
+  .email-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .email-detail-header .email-subject {
+    font-size: 1.4em;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    white-space: normal; /* Permet au sujet de s'enrouler sur plusieurs lignes */
+  }
+  .email-detail-header .email-actions {
+    width: 100%;
+    justify-content: flex-start; /* Aligner les actions à gauche sur petits écrans */
+    margin-top: 8px;
+  }
+}

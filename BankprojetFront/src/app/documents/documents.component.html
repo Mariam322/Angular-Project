@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Documents</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<app-sidebar> </app-sidebar>
+    <!-- Navigation -->
+   <div class="container" style="margin-top: -600px;">
+
+    
+
+    <!-- Messages d'alerte -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        {{ errorMessage }}
+        <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        {{ successMessage }}
+        <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+    </div>
+
+    <!-- Barre de recherche et filtres -->
+    
+
+        <!-- Sélection du type de document -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0" style="color:white;">
+                    <i class="fas fa-folder-plus me-2"></i>
+                    Ajouter un nouveau document
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card document-type-card" 
+                             [class.active]="selectedCategory === TypeDocument.OPERATIONBANCAIRE"
+                             (click)="selectCategory(TypeDocument.OPERATIONBANCAIRE)">
+                            <div class="card-body">
+                                <i class="fas fa-university document-icon"></i>
+                                <h6>Opérations Bancaires</h6>
+                                <small class="text-muted">Relevés, virements, chèques</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card document-type-card" 
+                             [class.active]="selectedCategory === TypeDocument.FACTURE"
+                             (click)="selectCategory(TypeDocument.FACTURE)">
+                            <div class="card-body">
+                                <i class="fas fa-file-invoice document-icon"></i>
+                                <h6>Factures</h6>
+                                <small class="text-muted">Factures clients</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card document-type-card" 
+                             [class.active]="selectedCategory === TypeDocument.DEVIS"
+                             (click)="selectCategory(TypeDocument.DEVIS)">
+                            <div class="card-body">
+                                <i class="fas fa-file-signature document-icon"></i>
+                                <h6>Devis</h6>
+                                <small class="text-muted">Devis clients</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card document-type-card" 
+                             [class.active]="selectedCategory === TypeDocument.FACTUREFOURNISSEUR"
+                             (click)="selectCategory(TypeDocument.FACTUREFOURNISSEUR)">
+                            <div class="card-body">
+                                <i class="fas fa-truck document-icon"></i>
+                                <h6>Factures Fournisseur</h6>
+                                <small class="text-muted">Factures fournisseurs</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone d'upload -->
+        <div class="card mb-4" *ngIf="selectedCategory">
+            <div class="card-header">
+                <h5 class="mb-0" style="color:white;">
+                    <i class="fas fa-cloud-upload-alt me-2"></i>
+                    Télécharger des documents - {{ selectedCategory }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="upload-area" (click)="fileInput.click()">
+                    <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-muted"></i>
+                    <h5>Glissez-déposez vos fichiers ici</h5>
+                    <p class="text-muted">ou cliquez pour sélectionner des fichiers</p>
+                    <input #fileInput type="file" class="d-none" (change)="onFileSelected($event)" 
+                           accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                    <div class="progress mt-3" *ngIf="isUploading">
+                        <div class="progress-bar" role="progressbar" [style.width.%]="uploadProgress"></div>
+                    </div>
+                    <div *ngIf="selectedFile" class="mt-3">
+                        Fichier sélectionné: {{ selectedFile.name }}
+                    </div>
+                </div>
+
+                <div >
+                    <div  class="col-md-12" >
+                        <label for="docTitle" class="form-label" style="margin-left:-1000px;margin-top: 20px;color:blue;">Nom du document</label>
+                        <input type="text" class="form-control" id="docTitle"  
+                               [(ngModel)]="documentForm.title" placeholder="Entrez le titre du document">
+                    </div>
+                    <div class="mb-3">
+                        <label for="docDate" class="form-label"style="margin-left:-1000px;margin-top: 20px;color:blue;">Date du document</label>
+                        <input type="date" class="form-control" id="docDate" 
+                               [(ngModel)]="documentForm.date">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label for="docDescription" class="form-label"style="margin-left:-970px;color:blue;">Description (optionnel)</label>
+                        <textarea class="form-control" id="docDescription" rows="3" 
+                                  [(ngModel)]="documentForm.description" placeholder="Description du document..."></textarea>
+                    </div>
+                </div>
+
+                
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary" (click)="uploadDocument()" [disabled]="!selectedFile || isUploading">
+                        <i class="fas fa-save me-2"></i>
+                        <span *ngIf="!isUploading">Enregistrer le document</span>
+                        <span *ngIf="isUploading">Envoi en cours...</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary ms-2" (click)="resetForm()">
+                        <i class="fas fa-times me-2"></i>Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des documents -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0" style="color:white;">
+                    <i class="fas fa-folder-open me-2"></i>
+                    Documents enregistrés
+                </h5>
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" [(ngModel)]="searchTerm" 
+                           (input)="filterDocuments()" placeholder="Rechercher...">
+                    <select class="form-select form-select-sm" [(ngModel)]="filterCategory" 
+                            (change)="filterDocuments()" style="width: auto;">
+                        <option value="">Tous les types</option>
+                        <option [value]="TypeDocument.OPERATIONBANCAIRE">Opérations Bancaires</option>
+                        <option [value]="TypeDocument.FACTURE">Factures</option>
+                        <option [value]="TypeDocument.DEVIS">Devis</option>
+                        <option [value]="TypeDocument.FACTUREFOURNISSEUR">Factures Fournisseur</option>
+                    </select>
+                </div>
+            </div>
+           
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-custom">
+                        <thead style="background-color: #d6e3e8a1;">
+                            <tr  >
+                                <th>Type</th>
+                                <th>nom fichier</th>
+                             
+                               
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="isLoading">
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Chargement...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!isLoading && filteredDocuments.length === 0">
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    <i class="fas fa-folder-open fa-2x mb-2"></i>
+                                    <p>Aucun document trouvé</p>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let doc of filteredDocuments">
+                                <td>
+                                    <i [class]="getCategoryIcon(doc.type)"></i>
+                                    <span class="ms-2">{{ doc.type }}</span>
+                                </td>
+                                <td>
+                                    <strong>{{ doc.nomfichier }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ doc.description }}</small>
+                                </td>
+                               
+                               
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary me-1" (click)="viewDocument(doc.id)" title="Voir">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success me-1" (click)="downloadDocument(doc.id, doc.nomfichier)" title="Télécharger">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" (click)="deleteDocument(doc.id)" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmer la suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sûr de vouloir supprimer ce document ? Cette action est irréversible.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</html>

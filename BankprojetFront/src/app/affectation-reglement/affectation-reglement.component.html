@@ -1,0 +1,118 @@
+<div class="modal-backdrop">
+  <div class="container">
+    <div class="modal-content">
+      <div class="text">
+        Affectation du règlement REG-0{{reglement.id}}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{errorMessage}}
+      </div>
+      
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{successMessage}}
+      </div>
+
+      <div class="modal-body">
+        <div class="reglement-info">
+          <div class="progress mb-3" *ngIf="isLoading">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+         role="progressbar" style="width: 100%"></div>
+  </div>
+
+  <div class="alert alert-warning" *ngIf="montantRestant > 0 && selectedItems.length > 0">
+    Montant restant non affecté: {{montantRestant | currency:'EUR'}}
+  </div>
+
+          <div>
+            <strong>Montant du règlement:</strong> 
+            {{reglement.montantReglemnt | currency:'EUR'}}
+          </div>
+          <div>
+            <strong>Montant restant:</strong> 
+            <span [class.text-danger]="montantRestant < 0" 
+                  [class.text-success]="montantRestant >= 0">
+              {{montantRestant | currency:'EUR'}}
+            </span>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button [class.active]="activeTab === 'facture'" 
+                  (click)="onTabChange('facture')">
+            Factures
+          </button>
+          <button [class.active]="activeTab === 'depense'" 
+                  (click)="onTabChange('depense')">
+            Dépenses
+          </button>
+          <button [class.active]="activeTab === 'operation'" 
+                  (click)="onTabChange('operation')">
+            Opérations
+          </button>
+        </div>
+
+        <div class="form-group">
+          <input type="text" [(ngModel)]="searchText" 
+                 placeholder="Rechercher..." 
+                 class="form-control">
+        </div>
+
+        <div *ngIf="isLoading" class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Chargement en cours...</p>
+        </div>
+
+        <div *ngIf="!isLoading && items.length === 0" class="no-items">
+          <p>Aucun élément trouvé</p>
+        </div>
+        
+
+        <div class="items-list" *ngIf="!isLoading && items.length > 0">
+          <div *ngFor="let item of filteredItems()" 
+               class="item-card"
+               [class.selected]="isSelected(item)"
+               (click)="toggleSelection(item)">
+            <div class="item-header">
+              <h3>
+                {{activeTab === 'facture' ? item.numeroFacture : 
+                  activeTab === 'depense' ? item.numDepense : 
+                  item.numCheque || 'Opération'}}
+              </h3>
+              <span>{{getItemDate(item) | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <p *ngIf="activeTab === 'facture'">Client: {{item.nom || 'Non spécifié'}}</p>
+            <p *ngIf="activeTab === 'depense'">Fournisseur: {{item.fournisseur || 'Non spécifié'}}</p>
+            <p class="amount">
+              Montant: {{getItemAmount(item) | currency:'EUR'}}
+            </p>
+          </div>
+        </div>
+
+        <div class="selected-items" *ngIf="selectedItems.length > 0">
+          <h3>Affectations sélectionnées</h3>
+          <div *ngFor="let item of selectedItems" class="selected-item">
+            <div>
+              <strong>{{getItemIdentifier(item)}}</strong>
+              <p>{{getItemDate(item) | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <input type="number" [(ngModel)]="item.montantAffectation" 
+                   (change)="updateAmount(item)"
+                   min="0.01" 
+                   [max]="getMontantMax(item)"
+                   step="0.01" 
+                   class="form-control amount-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="close()">Annuler</button>
+        <button class="btn btn-success" (click)="saveAffectations()" 
+                [disabled]="selectedItems.length === 0 || montantRestant < 0 || isLoading">
+          Valider les affectations
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

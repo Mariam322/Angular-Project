@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Comptes Bancaires | Banque Zitouna</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+       
+    </style>
+</head>
+
+    <app-sidebar></app-sidebar>
+                <!-- Page Header -->
+                 <div class="page-header" style="background-color:#2976b0;  padding: 20px; margin-bottom: 20px; border-radius: 5px;margin-top:-585px;width:1225px;margin-left: 270px;">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="mb-3 mb-md-0">
+                            <h2 class="fw-bold custom mb-1" style="color: white;">
+                            <i class="fas fa-file-invoice me-2"></i>
+                                Gestion des comptes
+                            </h2>
+                            <p class="text mb-0" style="color: white;">Gérez tous vos paiements entrants et sortants</p>
+                        </div>
+                        <button (click)="open()" class="add-account-btn">
+                            <i class="fas fa-plus me-2"></i>
+                            Nouvelle compte
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Bar -->
+                <div class="search-filter-bar" style="margin-top:20px;width:1225px;margin-left: 270px;background-color:  #d6e3e8a1;">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="searchInput" class="form-label" style="color:#09337be9;font-weight: 600;">Rechercher</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Référence, entreprise..."  [(ngModel)]="searchQuery"  >
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-1 d-flex align-items-end">
+                            <button  (click)="clearSearch()"  [disabled]="!searchQuery"  class="btn btn-outline-secondary w-100" id="clearFilters">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+ 
+                <!-- Table Section -->
+                <div class="table-responsive" style="width:1225px;margin-left: 270px;">
+                    <table class="table table-hover table-custom">
+                        <thead style="background-color: #d6e3e8a1;">
+                            <tr>
+                                <th>Réference</th>
+                                <th>Banque</th>
+                                <th>Numéro de compte</th>
+                                <th>Actions</th>
+                                <th>Opérations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let account of ListeCompte">
+                                <td><strong>{{ account.idCompte }}</strong></td>
+                                <td>{{ account.nomBanque }}</td>
+                                <td>{{ account.numeroCompte }}</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button (click)="onedit(account.idCompte)" class="action-btn pen" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button (click)="confirmDelete(account.idCompte)" class="action-btn trash" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button routerLink="/comptes/{{account.idCompte}}/operations" class="action-btn eye" title="Voir détails">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+      
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Initialisation des tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Simulation de chargement dynamique
+        setTimeout(() => {
+            document.querySelector('.fade-in').style.opacity = '1';
+        }, 100);
+    });
+</script>
+
+</html>

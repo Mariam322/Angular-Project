@@ -1,0 +1,416 @@
+ :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .description-cell {
+  white-space: normal; /* Permet le retour à la ligne */
+  max-width: 250px; /* Limite la largeur */
+  word-wrap: break-word; /* Force le retour à la ligne */
+}
+
+        /* Layout Components */
+        .invoice-container {
+            background: rgb(220, 181, 181);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin: 2rem auto;
+            overflow: hidden;
+            max-width: 1400px;
+            margin-top: -1200px;
+        }
+
+        .sidebar {
+            background:  #34495e ;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .content-area {
+            padding: 2rem;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        /* Navigation Styles */
+        .brand-header {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item-custom {
+            margin: 0.5rem 1rem;
+        }
+
+        .nav-link-custom {
+            color: rgba(255,255,255,0.8);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Card Components */
+        .invoice-card {
+            background: rgb(255, 255, 255);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .invoice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .page-header {
+            background: #547bb6;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        /* Button Styles */
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--secondary-color), #5dade2);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+.add-account-btn {
+            background: rgba(255, 255, 255, 0.327);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 16px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .add-account-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            color: rgb(255, 255, 255);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        .btn-success-custom {
+            background: linear-gradient(45deg, var(--success-color), #58d68d);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+        }
+       
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, var(--accent-color), #ec7063);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Form Styles */
+        .form-control-custom {
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+.form-select{
+    border-radius: 10px;
+   
+    padding: 8px 15px;
+    width: 100%;
+    max-width: 200px;
+    font-size: 0.9rem;
+    height: auto;
+    border-color: #16283a;
+    box-shadow: #2c3e50;
+}
+        .form-control-custom:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        /* Table Styles */
+        .table-custom {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+.form-control{
+    border-radius: 10px;
+   
+    padding: 8px 15px;
+    width: 100%;
+    max-width: 200px;
+    font-size: 0.9rem;
+    height: auto;
+    border-color: #16283a;
+    box-shadow: #2c3e50;
+}
+
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    margin: 0 3px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn.eye {
+    background-color: rgba(15, 83, 177, 0.1);
+    color: rgb(15, 83, 177);
+}
+
+.action-btn.pen {
+    background-color: rgba(10, 80, 18, 0.1);
+    color: rgb(10, 80, 18);
+}
+
+.action-btn.trash {
+    background-color: rgba(181, 18, 18, 0.1);
+    color: rgb(181, 18, 18);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn.eye:hover {
+    background-color: rgba(15, 83, 177, 0.2);
+}
+
+.action-btn.pen:hover {
+    background-color: rgba(10, 80, 18, 0.2);
+}
+
+.action-btn.trash:hover {
+    background-color: rgba(181, 18, 18, 0.2);
+}
+
+        .table-custom thead th {
+           
+            color: #09337be9;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+            background-color:  #d6e3e8a1;
+        }
+
+        .table-custom tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .table-custom tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-paid {
+            background: #d5f4e6;
+            color: var(--success-color);
+        }
+           .search-filter-bar {
+            background-color:  #d6e3e8a1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: var(--warning-color);
+        }
+
+        .status-overdue {
+            background: #f8d7da;
+            color: var(--accent-color);
+        }
+
+        /* Invoice Preview Styles */
+        .invoice-preview {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin: 2rem 0;
+        }
+
+        .company-header {
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .invoice-details {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+
+        .total-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+        }
+
+        .invoice-item-row {
+            background: var(--light-bg);
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .invoice-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+            
+            .content-area {
+                padding: 1rem;
+            }
+            
+            .invoice-card {
+                padding: 1.5rem;
+            }
+
+            .sidebar {
+                min-height: auto;
+            }
+        }
+
+        /* Utility Classes */
+        .text-primary-custom {
+            color: var(--primary-color) !important;
+        }
+
+        .bg-light-custom {
+            background-color: var(--light-bg) !important;
+        }
+
+        .shadow-custom {
+            box-shadow: var(--shadow-light) !important;
+        }
+
+        .border-radius-custom {
+            border-radius: var(--border-radius) !important;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar,
+            .btn,
+            .page-header {
+                display: none !important;
+            }
+            
+            .invoice-preview {
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+        }
